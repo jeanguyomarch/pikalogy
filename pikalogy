@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/usr/local/bin/terminology --exec="bash -l" --theme="/usr/local/share/terminology/themes/pikalogy.edj"
+

@@ -5,7 +5,7 @@ clean:
 	rm *.edj
 
 play: all
-	terminology -t=./pikalogy.edj --exec="bash -l"
+	terminology -t=./pikalogy.edj
 
 install:
 	install -m 0644 pikalogy.edj /usr/local/share/terminology/themes/

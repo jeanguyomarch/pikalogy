@@ -11,6 +11,8 @@ Terminology can be downloaded from here: http://web.enlightenment.org/p.php?p=ab
 This Edje theme has been inspired from the nyanology theme from Anisse Astier (https://github.com/anisse/nyanology)
 
 
+**Conforms to terminology 0.3.50 (git pull 14/09/2013)**
+
 Usage
 =====
 

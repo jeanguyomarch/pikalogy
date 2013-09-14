@@ -1,26 +1,269 @@
-#define FRAME_DURATION 0.07
+#ifdef SOLARIZED
+
+#define S_yellow  181 137   0 255
+#define S_orange  203  75  22 255
+#define S_red     220  50  47 255
+#define S_magenta 211  54 130 255
+#define S_violet  108 113 196 255
+#define S_blue     38 139 210 255
+#define S_cyan     42 161 152 255
+#define S_green   133 153   0 255
+
+#ifndef SOLARIZED_LIGHT
+/* Dark */
+
+#define S_base03   0  43  54 255
+#define S_base02   7  54  66 255
+#define S_base01  88 110 117 255
+#define S_base00 101 123 131 255
+#define S_base0  131 148 150 255
+#define S_base0_shine  141 148 150 128
+#define S_base1  147 161 161 255
+#define S_base2  238 232 213 255
+#define S_base3  253 246 227 255
+
+#else
+/* Light */
+
+#define S_base03 253 246 227 255
+#define S_base02 238 232 213 255
+#define S_base01 147 161 161 255
+#define S_base00 131 148 150 255
+#define S_base0  101 123 131 255
+#define S_base0_shine  111 123 131 128
+#define S_base1   88 110 117 255
+#define S_base2    7  54  66 255
+#define S_base3    0  43  54 255
+
+#endif
+#endif
 
 collections {
-   
-//////////////////////////////////////////////////////////////////////////////
+
+   //////////////////////////////////////////////////////////////////////////////
+   //// the background and general container for the terminal
+   group { name: "terminology/core";
+      parts {
+         ////////////////////////////////////////////////////////////////////
+         // background handling
+         part { name: "fade"; type: RECT;
+            description { state: "default" 0.0;
+            }
+            description { state: "translucent" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 128;
+            }
+         }
+         program {
+            signal: "translucent,on"; source: "terminology";
+            action: STATE_SET "translucent" 0.0;
+            target: "fade";
+         }
+         program {
+            signal: "translucent,off"; source: "terminology";
+            action: STATE_SET "default" 0.0;
+            target: "fade";
+         }
+         part { name: "terminology.background"; type: SWALLOW;
+            clip_to: "fade";
+            description { state: "default" 0.0;
+            }
+            description { state: "image" 0.0;
+               inherit: "default" 0.0;
+            }
+            description { state: "scale" 0.0;
+               inherit: "default" 0.0;
+            }
+            description { state: "edje" 0.0;
+               inherit: "default" 0.0;
+            }
+            description { state: "movie" 0.0;
+               inherit: "default" 0.0;
+            }
+         }
+         program {
+            signal: "media,off"; source: "terminology";
+            action: STATE_SET "default" 0.0;
+            target: "terminology.background";
+         }
+         program {
+            signal: "media,image"; source: "terminology";
+            action: STATE_SET "image" 0.0;
+            target: "terminology.background";
+         }
+         program {
+            signal: "media,scale"; source: "terminology";
+            action: STATE_SET "scale" 0.0;
+            target: "terminology.background";
+         }
+         program {
+            signal: "media,edje"; source: "terminology";
+            action: STATE_SET "edje" 0.0;
+            target: "terminology.background";
+         }
+         program {
+            signal: "media,movie"; source: "terminology";
+            action: STATE_SET "movie" 0.0;
+            target: "terminology.background";
+         }
+
+         ////////////////////////////////////////////////////////////////////
+         // actual text grid for chars, cursors, selectiond etc. goes here
+         part { name: "terminology.content"; type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1.offset: 1 1;
+               rel2.offset: -2 -2;
+            }
+         }
+      }
+   }
+
    //// the background and general container for the terminal
    group { name: "terminology/background";
+      #ifdef SOLARIZED
+      color_classes {
+         color_class { name: "color-0";  color: S_base0; }
+         color_class { name: "color-1";  color: S_base02; }
+         color_class { name: "color-2";  color: S_red; }
+         color_class { name: "color-3";  color: S_green; }
+         color_class { name: "color-4";  color: S_yellow; }
+         color_class { name: "color-5";  color: S_blue; }
+         color_class { name: "color-6";  color: S_magenta; }
+         color_class { name: "color-7";  color: S_cyan; }
+         color_class { name: "color-8";  color: S_base2; }
+         color_class { name: "color-11"; color: S_base0; }
+
+         color_class { name: "color-13"; color: S_base03; }
+         color_class { name: "color-14"; color: S_orange; }
+         color_class { name: "color-15"; color: S_base01; }
+         color_class { name: "color-16"; color: S_base00; }
+         color_class { name: "color-17"; color: S_base0; }
+         color_class { name: "color-18"; color: S_violet; }
+         color_class { name: "color-19"; color: S_base1; }
+         color_class { name: "color-20"; color: S_base3; }
+
+         color_class { name: "color-25"; color: S_base03; }
+         color_class { name: "color-26"; color: S_orange; }
+         color_class { name: "color-27"; color: S_base01; }
+         color_class { name: "color-28"; color: S_base00; }
+         color_class { name: "color-29"; color: S_base0; }
+         color_class { name: "color-30"; color: S_violet; }
+         color_class { name: "color-31"; color: S_base1; }
+         color_class { name: "color-32"; color: S_base3; }
+
+         color_class { name: "256color-0";  color: S_base02; } // COL_BLACK
+         color_class { name: "256color-1";  color: S_red; } // COL_RED
+         color_class { name: "256color-2";  color: S_green; } // COL_GREEN
+         color_class { name: "256color-3";  color: S_yellow; } // COL_YELLOW
+         color_class { name: "256color-4";  color: S_blue; } // COL_BLUE
+         color_class { name: "256color-5";  color: S_magenta; } // COL_MAGENTA
+         color_class { name: "256color-6";  color: S_cyan; } // COL_CYAN
+         color_class { name: "256color-7";  color: S_base2; } // COL_WHITE
+
+         color_class { name: "256color-8";  color: S_base03; } // COL_BLACK
+         color_class { name: "256color-9";  color: S_orange; } // COL_RED
+         color_class { name: "256color-10"; color: S_base01; } // COL_GREEN
+         color_class { name: "256color-11"; color: S_base00; } // COL_YELLOW
+         color_class { name: "256color-12"; color: S_base0; } // COL_BLUE
+         color_class { name: "256color-13"; color: S_violet; } // COL_MAGENTA
+         color_class { name: "256color-14"; color: S_base1; } // COL_CYAN
+         color_class { name: "256color-15"; color: S_base3; } // COL_WHITE
+      }
+      #else
+      color_classes {
+         color_class { name: "color-0";      color: 170 170 170 255; } // COL_DEF
+         color_class { name: "color-1";      color:   0   0   0 255; } // COL_BLACK
+         color_class { name: "color-2";      color: 204  51  51 255; } // COL_RED
+         color_class { name: "color-3";      color:  51 204  51 255; } // COL_GREEN
+         color_class { name: "color-4";      color: 204 136  51 255; } // COL_YELLOW
+         color_class { name: "color-5";      color:  35 110 245 255; } // COL_BLUE
+         color_class { name: "color-6";      color: 204  51 204 255; } // COL_MAGENTA
+         color_class { name: "color-7";      color:  51 204 204 255; } // COL_CYAN
+         color_class { name: "color-8";      color: 204 204 204 255; } // COL_WHITE
+         color_class { name: "color-9";      color:   0   0   0   0; } // COL_INVIS
+         color_class { name: "color-10";     color:  34  34  34 255; } // COL_INVERSE
+         color_class { name: "color-11";     color: 170 170 170 255; } // COL_INVERSEBG
+
+         color_class { name: "color-12";     color: 238 238 238 255; } // COL_DEF
+         color_class { name: "color-13";     color: 102 102 102 255; } // COL_BLACK
+         color_class { name: "color-14";     color: 255 102 102 255; } // COL_RED
+         color_class { name: "color-15";     color: 102 255 102 255; } // COL_GREEN
+         color_class { name: "color-16";     color: 255 255 102 255; } // COL_YELLOW
+         color_class { name: "color-17";     color: 102 102 255 255; } // COL_BLUE
+         color_class { name: "color-18";     color: 255 102 255 255; } // COL_MAGENTA
+         color_class { name: "color-19";     color: 102 255 255 255; } // COL_CYAN
+         color_class { name: "color-20";     color: 255 255 255 255; } // COL_WHITE
+         color_class { name: "color-21";     color:   0   0   0   0; } // COL_INVIS
+         color_class { name: "color-22";     color:  17  17  17 255; } // COL_INVERSE
+         color_class { name: "color-23";     color: 238 238 238 255; } // COL_INVERSEBG
+
+         color_class { name: "color-24";     color: 221 221 221 255; } // COL_DEF
+         color_class { name: "color-25";     color:   0   0   0 255; } // COL_BLACK
+         color_class { name: "color-26";     color: 204 136 136 255; } // COL_RED
+         color_class { name: "color-27";     color: 136 204 136 255; } // COL_GREEN
+         color_class { name: "color-28";     color: 204 170 136 255; } // COL_YELLOW
+         color_class { name: "color-29";     color: 136 136 204 255; } // COL_BLUE
+         color_class { name: "color-30";     color: 204 136 204 255; } // COL_MAGENTA
+         color_class { name: "color-31";     color: 136 204 204 255; } // COL_CYAN
+         color_class { name: "color-32";     color: 204 204 204 255; } // COL_WHITE
+         color_class { name: "color-33";     color:   0   0   0   0; } // COL_INVIS
+         color_class { name: "color-34";     color:  17  17  17 255; } // COL_INVERSE
+         color_class { name: "color-35";     color: 204 204 204 255; } // COL_INVERSEBG
+
+         color_class { name: "color-36";     color: 255 255 255 255; } // COL_DEF
+         color_class { name: "color-37";     color: 204 204 204 255; } // COL_BLACK
+         color_class { name: "color-38";     color: 255 204 204 255; } // COL_RED
+         color_class { name: "color-39";     color: 204 255 204 255; } // COL_GREEN
+         color_class { name: "color-40";     color: 255 255 204 255; } // COL_YELLOW
+         color_class { name: "color-41";     color: 204 204 255 255; } // COL_BLUE
+         color_class { name: "color-42";     color: 255 204 255 255; } // COL_MAGENTA
+         color_class { name: "color-43";     color: 204 255 255 255; } // COL_CYAN
+         color_class { name: "color-44";     color: 255 255 255 255; } // COL_WHITE
+         color_class { name: "color-45";     color:   0   0   0   0; } // COL_INVIS
+         color_class { name: "color-46";     color:   0   0   0 255; } // COL_INVERSE
+         color_class { name: "color-47";     color: 255 255 255 255; } // COL_INVERSEBG
+
+         color_class { name: "256color-0";   color:   0   0   0 255; } // COL_BLACK
+         color_class { name: "256color-1";   color: 204  51  51 255; } // COL_RED
+         color_class { name: "256color-2";   color:  51 204  51 255; } // COL_GREEN
+         color_class { name: "256color-3";   color: 204 136  51 255; } // COL_YELLOW
+         color_class { name: "256color-4";   color:  51  51 204 255; } // COL_BLUE
+         color_class { name: "256color-5";   color: 204  51 204 255; } // COL_MAGENTA
+         color_class { name: "256color-6";   color:  51 204 204 255; } // COL_CYAN
+         color_class { name: "256color-7";   color: 204 204 204 255; } // COL_WHITE
+
+         color_class { name: "256color-8";   color: 102 102 102 255; } // COL_BLACK
+         color_class { name: "256color-9";   color: 255 102 102 255; } // COL_RED
+         color_class { name: "256color-10";  color: 102 255 102 255; } // COL_GREEN
+         color_class { name: "256color-11";  color: 255 255 102 255; } // COL_YELLOW
+         color_class { name: "256color-12";  color: 102 102 255 255; } // COL_BLUE
+         color_class { name: "256color-13";  color: 255 102 255 255; } // COL_MAGENTA
+         color_class { name: "256color-14";  color: 102 255 255 255; } // COL_CYAN
+         color_class { name: "256color-15";  color: 255 255 255 255; } // COL_WHITE
+      }
+      #endif
       images {
-        image: "bg_bevel.png" COMP;
-        image: "bg_shine.png" COMP;
-        image: "bg_glint.png" COMP;
-        image: "bg_glow_in.png" COMP;
-        image: "bg_shadow.png" COMP;
-        image: "bg_led_glow.png" COMP;
-        image: "bg_led_base.png" COMP;
-        image: "bg_led.png" COMP;
-        image: "bg_led_strobe.png" COMP;
-        image: "pm_shadow.png" COMP;
-        image: "pm_overlay.png" COMP;
-        image: "pm_fill.png" COMP;
-        image: "lightening_1.png" COMP;
-        image: "lightening_2.png" COMP;
-        image: "lightening_3.png" COMP;
+         image: "bg_bevel.png" COMP;
+         image: "bg_shine.png" COMP;
+         image: "bg_glint.png" COMP;
+         image: "bg_glow_in.png" COMP;
+         image: "bg_shadow.png" COMP;
+         image: "bg_led_glow.png" COMP;
+         image: "bg_led_base.png" COMP;
+         image: "bg_led.png" COMP;
+         image: "bg_led_strobe.png" COMP;
+         image: "pm_shadow.png" COMP;
+         image: "pm_overlay.png" COMP;
+         image: "pm_fill.png" COMP;
+         image: "cr_glow.png" COMP;
+         image: "lightening_1.png" COMP;
+         image: "lightening_2.png" COMP;
+         image: "lightening_3.png" COMP;
+      }
+      sounds {
+         sample { name: "bell" LOSSY 64;
+            source: "pikachu.mp3";
+         }
       }
       parts {
          ////////////////////////////////////////////////////////////////////
@@ -40,94 +283,320 @@ collections {
          part { name: "base"; type: RECT;
             mouse_events: 1;
             description { state: "default" 0.0;
+               #ifdef SOLARIZED
+               color: S_base03;
+               #else
                color: 32 32 32 255;
+               #endif
             }
             description { state: "translucent" 0.0;
                inherit: "default" 0.0;
                visible: 0;
             }
          }
-         part { name: "fade"; type: RECT;
-            description { state: "default" 0.0;
-            }
-            description { state: "translucent" 0.0;
-               inherit: "default" 0.0;
-               color: 255 255 255 128;
-            }
-         }
-         part { name: "terminology.background"; type: SWALLOW;
-            clip_to: "fade";
-            description { state: "default" 0.0;
-            }
-            description { state: "image" 0.0;
-               inherit: "default" 0.0;
-            }
-            description { state: "scale" 0.0;
-               inherit: "default" 0.0;
-            }
-            description { state: "edje" 0.0;
-               inherit: "default" 0.0;
-            }
-            description { state: "movie" 0.0;
-               inherit: "default" 0.0;
-            }
-         }
-         program { name: "trans_on";
-            signal: "translucent,on";
-            source: "terminology";
+         program {
+            signal: "translucent,on"; source: "terminology";
             action: STATE_SET "translucent" 0.0;
             target: "base";
             target: "shadow";
-            target: "fade";
          }
-         program { name: "trans_off";
-            signal: "translucent,off";
-            source: "terminology";
+         program {
+            signal: "translucent,off"; source: "terminology";
             action: STATE_SET "default" 0.0;
             target: "base";
             target: "shadow";
-            target: "fade";
          }
-         program { name: "media_off";
-            signal: "media,off";
-            source: "terminology";
-            action: STATE_SET "default" 0.0;
-            target: "terminology.background";
-         }
-         program { name: "media_img";
-            signal: "media,image";
-            source: "terminology";
-            action: STATE_SET "image" 0.0;
-            target: "terminology.background";
-         }
-         program { name: "media_scale";
-            signal: "media,scale";
-            source: "terminology";
-            action: STATE_SET "scale" 0.0;
-            target: "terminology.background";
-         }
-         program { name: "media_edje";
-            signal: "media,edje";
-            source: "terminology";
-            action: STATE_SET "edje" 0.0;
-            target: "terminology.background";
-         }
-         program { name: "media_mov";
-            signal: "media,movie";
-            source: "terminology";
-            action: STATE_SET "movie" 0.0;
-            target: "terminology.background";
-         }
-         
+
          ////////////////////////////////////////////////////////////////////
          // actual text grid for chars, cursors, selectiond etc. goes here
+         // and has a background layered behind it inside the swallowed
+         // child edje
          part { name: "terminology.content"; type: SWALLOW;
             description { state: "default" 0.0;
-               rel1.offset: 1 1;
-               rel2.offset: -2 -2;
             }
          }
-         
+
+         ////////////////////////////////////////////////////////////////////
+         // indicator of other tabs and control
+         part { name: "tabcount_clip"; type: RECT;
+            description { state: "default" 0.0;
+               color: 255 255 255 0;
+               visible: 0;
+            }
+            description { state: "on" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "terminology.tabmissed.label"; type: TEXT; mouse_events: 0;
+            effect: GLOW;
+            scale: 1;
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1.to: "terminology.tabcount.label";
+               rel2.to: "terminology.tabcount.label";
+               rel1.offset: -4 0;
+               rel2.relative: 0.0 1.0;
+               rel2.offset: -5 -1;
+               color: 255 153 51 64;
+               color2: 255 51 0 18;
+               color3: 255 0 0 8;
+               align: 1.0 0.5;
+               text { font: "Sans"; size: 8;
+                  align: 1.0 0.5;
+                  min: 1 1;
+               }
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 64 255;
+               color2: 255 153 51 128;
+               color3: 255 0 0 20;
+            }
+         }
+         part { name: "terminology.tabcount.label"; type: TEXT; mouse_events: 0;
+            effect: GLOW;
+            scale: 1;
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1.to: "terminology.tabcount.control";
+               rel2.to: "terminology.tabcount.control";
+               rel1.relative: -0.2 0.0;
+               rel2.relative: -0.2 1.0;
+               color: 255 248 51 64;
+               color2: 255 248 51 18;
+               color3: 255 248 51 8;
+               align: 1.0 0.5;
+               text { font: "Sans"; size: 8;
+                  align: 1.0 0.5;
+                  min: 1 1;
+               }
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               color2: 255 248 51 128;
+               color3: 255 248 51 20;
+            }
+         }
+         part { name: "tabcount_glow_r0";
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               rel1.to: "tabcount_r0";
+               rel2.to: "tabcount_r0";
+               rel1.offset: -4 -4;
+               rel2.offset: 3 3;
+               image {
+                  normal: "cr_glow.png";
+                  border: 9 9 9 9;
+               }
+               color: 255 248 51 32;
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 248 51 255;
+            }
+         }
+         part { name: "tabcount_glow_r1";
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               rel1.to: "tabcount_r1";
+               rel2.to: "tabcount_r1";
+               rel1.offset: -4 -4;
+               rel2.offset: 3 3;
+               image {
+                  normal: "cr_glow.png";
+                  border: 9 9 9 9;
+               }
+               color: 255 248 51 32;
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 248 51 255;
+            }
+         }
+         part { name: "tabcount_glow_r2";
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               rel1.to: "tabcount_r2";
+               rel2.to: "tabcount_r2";
+               rel1.offset: -4 -4;
+               rel2.offset: 3 3;
+               image {
+                  normal: "cr_glow.png";
+                  border: 9 9 9 9;
+               }
+               color: 255 248 51 32;
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 248 51 255;
+            }
+         }
+         part { name: "tabcount_glow_r3";
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               rel1.to: "tabcount_r3";
+               rel2.to: "tabcount_r3";
+               rel1.offset: -4 -4;
+               rel2.offset: 3 3;
+               image {
+                  normal: "cr_glow.png";
+                  border: 9 9 9 9;
+               }
+               color: 255 248 51 32;
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 248 51 255;
+            }
+         }
+         part { name: "tabcount_r0"; type: RECT;
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               rel1.to: "terminology.tabcount.control";
+               rel2.to: "terminology.tabcount.control";
+               rel1.relative: 0.05 0.05;
+               rel2.relative: 0.45 0.45;
+               color: 255 255 255 32;
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "tabcount_r1"; type: RECT;
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               rel1.to: "terminology.tabcount.control";
+               rel2.to: "terminology.tabcount.control";
+               rel1.relative: 0.55 0.05;
+               rel2.relative: 0.95 0.45;
+               color: 255 255 255 32;
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "tabcount_r2"; type: RECT;
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               rel1.to: "terminology.tabcount.control";
+               rel2.to: "terminology.tabcount.control";
+               rel1.relative: 0.05 0.55;
+               rel2.relative: 0.45 0.95;
+               color: 255 255 255 32;
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "tabcount_r3"; type: RECT;
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               rel1.to: "terminology.tabcount.control";
+               rel2.to: "terminology.tabcount.control";
+               rel1.relative: 0.55 0.55;
+               rel2.relative: 0.95 0.95;
+               color: 255 255 255 32;
+            }
+            description { state: "over" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "terminology.tabcount.control"; type: SWALLOW;
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1.relative: 1.0 0.0;
+               rel1.offset: -3 2;
+               rel2.relative: 1.0 0.0;
+               rel2.offset: -3 2;
+               align: 1.0 0.0;
+               min: 16 16;
+            }
+         }
+         part { name: "tabcount_ev"; type: RECT; repeat_events: 1;
+            clip_to: "tabcount_clip";
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               rel1.to: "terminology.tabcount.control";
+               rel2.to: "terminology.tabcount.control";
+               color: 0 0 0 0;
+            }
+         }
+         program {
+            signal: "mouse,in"; source: "tabcount_ev";
+            action: STATE_SET "over" 0.0;
+            transition: DECELERATE 0.5;
+            target: "tabcount_r0";
+            target: "tabcount_r1";
+            target: "tabcount_r2";
+            target: "tabcount_r3";
+            target: "tabcount_glow_r0";
+            target: "tabcount_glow_r1";
+            target: "tabcount_glow_r2";
+            target: "tabcount_glow_r3";
+            target: "terminology.tabcount.label";
+            target: "terminology.tabmissed.label";
+         }
+         program {
+            signal: "mouse,out"; source: "tabcount_ev";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 2.0;
+            target: "tabcount_r0";
+            target: "tabcount_r1";
+            target: "tabcount_r2";
+            target: "tabcount_r3";
+            target: "tabcount_glow_r0";
+            target: "tabcount_glow_r1";
+            target: "tabcount_glow_r2";
+            target: "tabcount_glow_r3";
+            target: "terminology.tabcount.label";
+            target: "terminology.tabmissed.label";
+         }
+         program {
+            signal: "mouse,clicked,1"; source: "tabcount_ev";
+            action: SIGNAL_EMIT "tabcount,go" "terminology";
+         }
+         program {
+            signal: "tabcount,off"; source: "terminology";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 0.5;
+            target: "tabcount_clip";
+         }
+         program {
+            signal: "tabcount,on"; source: "terminology";
+            action: STATE_SET "on" 0.0;
+            transition: DECELERATE 0.5;
+            target: "tabcount_clip";
+         }
+         program {
+            signal: "tabmissed,off"; source: "terminology";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 0.5;
+            target: "terminology.tabmissed.label";
+         }
+         program {
+            signal: "tabmissed,on"; source: "terminology";
+            action: STATE_SET "over" 0.0;
+            transition: DECELERATE 0.2;
+            target: "terminology.tabmissed.label";
+            after: "tabmissed2";
+         }
+         program { name: "tabmissed2";
+            signal: "tabmissed,on"; source: "terminology";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 3.0;
+            target: "terminology.tabmissed.label";
+         }
+
          ////////////////////////////////////////////////////////////////////
          // overlayed prettiness
          part { name: "glow";
@@ -158,7 +627,6 @@ collections {
             }
          }
          part { name: "glintclip"; type: RECT;
-            mouse_events: 1;
             description { state: "default" 0.0;
             }
          }
@@ -202,186 +670,121 @@ collections {
                color: 255 255 255 255;
             }
          }
-         program { name: "focus_in";
-            signal: "focus,in";
-            source: "terminology";
+         program {
+            signal: "focus,in"; source: "terminology";
             action: STATE_SET "focused" 0.0;
             target: "glint";
             target: "glow";
             target: "shine";
             after: "focus_in2";
          }
-         program { name: "focus_out";
-            signal: "focus,out";
-            source: "terminology";
-            action: STATE_SET "default" 0.0;
-            target: "glint";
-            target: "glow";
-            target: "shine";
-         }
          program { name: "focus_in2";
             action: STATE_SET "focused2" 0.0;
             transition: DECELERATE 0.5;
             target: "glow";
          }
+         program {
+            signal: "focus,out"; source: "terminology";
+            action: STATE_SET "default" 0.0;
+            target: "glint";
+            target: "glow";
+            target: "shine";
+         }
 
          ////////////////////////////////////////////////////////////////////
          // visual bell - spinning red siren light
-        /* bell_glow here */ 
-        // part { name: "bell_base";
-        //    mouse_events: 0;
-        //    description { state: "default" 0.0;
-        //       fixed: 1 1;
-        //       visible: 0;
-        //       color: 255 255 255 0;
-        //       min: 32 32;
-        //       max: 32 32;
-        //       rel2.offset: -1 -1;
-        //       align: 1.0 1.0;
-        //       image.normal: "bg_led_base.png";
-        //    }
-        //    description { state: "visible" 0.0;
-        //       inherit: "default" 0.0;
-        //       visible: 1;
-        //       color: 255 255 255 255;
-        //    }
-        // }
-     //    part { name: "bell";
-     //       mouse_events: 0;
-     //       description { state: "default" 0.0;
-     //          fixed: 1 1;
-     //          visible: 0;
-     //          color: 255 255 255 0;
-     //          rel1.to: "bell_base";
-     //          rel2.to: "bell_base";
-     //          image.normal: "bg_led.png";
-     //       }
-     //       description { state: "visible" 0.0;
-     //          inherit: "default" 0.0;
-     //          visible: 1;
-     //          color: 255 255 255 255;
-     //       }
-     //    }
-     //    part { name: "bell_strobe";
-     //       mouse_events: 0;
-     //       description { state: "default" 0.0;
-     //          fixed: 1 1;
-     //          visible: 0;
-     //          color: 255 255 255 0;
-     //          rel1.to: "bell";
-     //          rel2.to: "bell";
-     //          image.normal: "bg_led_strobe.png";
-     //          map {
-     //             on: 1;
-     //             smooth: 1;
-     //             rotation.center: "bell";
-     //          }
-     //       }
-     //       description { state: "spin" 0.0;
-     //          inherit: "default" 0.0;
-     //          visible: 1;
-     //          color: 255 255 255 255;
-     //          map.rotation.z: 36.0;
-     //       }
-     //       description { state: "spin_done" 0.0;
-     //          inherit: "default" 0.0;
-     //          visible: 0;
-     //          color: 255 255 255 0;
-     //          map.rotation.z: 684.0;
-     //       }
-     //    }
-part { name: "bell_base";
-   mouse_events: 0;
-   description { state: "default" 0.0;
-      fixed: 1 1;
-      visible: 0;
-      color: 255 255 255 0;
-      min: 32 32;
-      max: 32 32;
-      rel2.offset: -1 -1;
-      align: 1.0 1.0;
-      image.normal: "bg_led_base.png";
-   }
-   description { state: "visible" 0.0;
-      inherit: "default" 0.0;
-   }
-}
+         part { name: "bell_base";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               visible: 0;
+               color: 255 255 255 0;
+               min: 32 32;
+               max: 32 32;
+               rel2.offset: -1 -1;
+               align: 1.0 1.0;
+               image.normal: "bg_led_base.png";
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+            }
+         }
 
-        part { name: "THUNDER_1";
-                mouse_events: 0;                       
-                description { state: "default" 0.0;    
-                   fixed: 1 1;                         
-                   visible: 0;                         
-                   color: 255 255 255 0;               
-                   rel2.relative: 1.0 1.0;
-                   align: 1 1;
+         part { name: "THUNDER_1";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               visible: 0;
+               color: 255 255 255 0;
+               rel2.relative: 1.0 1.0;
+               align: 1 1;
                min: 500 500;
                max: 500 500;
-                   fill.smooth: 0;                     
-                   image.normal: "lightening_1.png";     
-                }                                      
-                description { state: "visible" 0.0;    
-                   inherit: "default" 0.0;             
-                   visible: 1;                         
-                   color: 255 248 51 255;
-                }                                      
-                description { state: "done" 0.0;       
-                   inherit: "default" 0.0;             
-                   visible: 0;                         
-                   color: 255 255 255 0;               
-                   min: 0 0;                           
-                }
-        }
-        part { name: "THUNDER_2";
-            mouse_events: 0;                       
-            description { state: "default" 0.0;    
-               fixed: 1 1;                         
-               visible: 0;                         
-               color: 255 255 255 0;               
+               fill.smooth: 0;
+               image.normal: "lightening_1.png";
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 248 51 255;
+            }
+            description { state: "done" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               min: 0 0;
+            }
+         }
+         part { name: "THUNDER_2";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               visible: 0;
+               color: 255 255 255 0;
                rel2.relative: 1.0 1.0;
                align: 1 1;
                min: 350 350;
                max: 350 350;
-               fill.smooth: 0;                     
-               image.normal: "lightening_2.png";     
-            }                                      
-            description { state: "visible" 0.0;    
-               inherit: "default" 0.0;             
-               visible: 1;                         
-               color: 255 248 51 255;
-            }                                      
-            description { state: "done" 0.0;       
-               inherit: "default" 0.0;             
-               visible: 0;                         
-               color: 255 255 255 0;               
-               min: 0 0;                           
+               fill.smooth: 0;
+               image.normal: "lightening_2.png";
             }
-        }
-        part { name: "THUNDER_3";
-            mouse_events: 0;                       
-            description { state: "default" 0.0;    
-               fixed: 1 1;                         
-               visible: 0;                         
-               color: 255 255 255 0;               
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 248 51 255;
+            }
+            description { state: "done" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               min: 0 0;
+            }
+         }
+         part { name: "THUNDER_3";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               visible: 0;
+               color: 255 255 255 0;
                rel2.relative: 1.0 1.0;
                align: 1 1;
                min: 500 500;
                max: 500 500;
-               fill.smooth: 0;                     
-               image.normal: "lightening_3.png";     
-            }                                      
-            description { state: "visible" 0.0;    
-               inherit: "default" 0.0;             
-               visible: 1;                         
-               color: 255 248 51 255;
-            }                                      
-            description { state: "done" 0.0;       
-               inherit: "default" 0.0;             
-               visible: 0;                         
-               color: 255 255 255 0;               
-               min: 0 0;                           
+               fill.smooth: 0;
+               image.normal: "lightening_3.png";
             }
-        }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 248 51 255;
+            }
+            description { state: "done" 0.0;
+               inherit: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+               min: 0 0;
+            }
+         }
          program { name: "bell0";
             signal: "bell";
             source: "terminology";
@@ -401,26 +804,26 @@ part { name: "bell_base";
             after: "bell1.1";
          }
          program { name: "bell1.1";
-                action: STATE_SET "default" 0.0;
-                target: "THUNDER_2";
-                after: "bell2.2";
+            action: STATE_SET "default" 0.0;
+            target: "THUNDER_2";
+            after: "bell2.2";
          }
          program { name: "bell2.2";
-                action: STATE_SET "visible" 0.0;
+            action: STATE_SET "visible" 0.0;
             transition: ACCELERATE 0.05;
-                target: "THUNDER_2";
-                after: "bell1.2";
+            target: "THUNDER_2";
+            after: "bell1.2";
          }
-        program { name: "bell1.2";
-                action: STATE_SET "default" 0.0;
-                target: "THUNDER_3";
-                after: "bell2.3";
+         program { name: "bell1.2";
+            action: STATE_SET "default" 0.0;
+            target: "THUNDER_3";
+            after: "bell2.3";
          }
          program { name: "bell2.3";
-                action: STATE_SET "visible" 0.0;
+            action: STATE_SET "visible" 0.0;
             transition: ACCELERATE 0.05;
-                target: "THUNDER_3";
-                after: "bell3.1";
+            target: "THUNDER_3";
+            after: "bell3.1";
          }
          program { name: "bell3.1";
             action: STATE_SET "done" 0.0;
@@ -428,13 +831,13 @@ part { name: "bell_base";
             target: "THUNDER_1";
             after: "bell3.2";
          }
-        program { name: "bell3.2";
+         program { name: "bell3.2";
             action: STATE_SET "done" 0.0;
             transition: DECELERATE 0.1;
             target: "THUNDER_2";
             after: "bell3.3";
          }
-        program { name: "bell3.3";
+         program { name: "bell3.3";
             action: STATE_SET "done" 0.0;
             transition: DECELERATE 0.1;
             target: "THUNDER_3";
@@ -459,12 +862,8 @@ part { name: "bell_base";
             mouse_events: 0;
             description { state: "default" 0.0;
                fixed: 1 1;
-               rel1 {
-                  to: "terminology.popmedia";
-               }
-               rel2 {
-                  to: "terminology.popmedia";
-               }
+               rel1.to: "terminology.popmedia";
+               rel2.to: "terminology.popmedia";
                image.normal: "pm_shadow.png";
                image.border: 64 64 64 64;
                image.border_scale_by: 0.1;
@@ -623,9 +1022,8 @@ part { name: "bell_base";
                visible: 1;
             }
          }
-         program { name: "popmedia_dismiss";
-            signal: "mouse,clicked,*";
-            source: "popmedia_dismiss";
+         program {
+            signal: "mouse,clicked,*"; source: "popmedia_dismiss";
             action: STATE_SET "default" 0.0;
             transition: DECELERATE 0.5;
             target: "terminology.popmedia";
@@ -643,9 +1041,8 @@ part { name: "bell_base";
          program { name: "popmedia_dismiss2";
             action: SIGNAL_EMIT "popmedia,done" "terminology";
          }
-         program { name: "popmedia_off";
-            signal: "popmedia,off";
-            source: "terminology";
+         program {
+            signal: "popmedia,off"; source: "terminology";
             action: STATE_SET "default" 0.0;
             transition: DECELERATE 0.2;
             target: "terminology.popmedia";
@@ -660,37 +1057,32 @@ part { name: "bell_base";
             target: "popmedia_shine";
             after: "popmedia_dismiss2";
          }
-         program { name: "popmedia_img";
-            signal: "popmedia,image";
-            source: "terminology";
+         program {
+            signal: "popmedia,image"; source: "terminology";
             action: STATE_SET "image" 0.0;
             transition: DECELERATE 0.2;
             target: "terminology.popmedia";
          }
-         program { name: "popmedia_scale";
-            signal: "popmedia,scale";
-            source: "terminology";
+         program {
+            signal: "popmedia,scale"; source: "terminology";
             action: STATE_SET "scale" 0.0;
             transition: DECELERATE 0.2;
             target: "terminology.popmedia";
          }
-         program { name: "popmedia_edje";
-            signal: "popmedia,edje";
-            source: "terminology";
+         program {
+            signal: "popmedia,edje"; source: "terminology";
             action: STATE_SET "edje" 0.0;
             transition: DECELERATE 0.2;
             target: "terminology.popmedia";
          }
-         program { name: "popmedia_mov";
-            signal: "popmedia,movie";
-            source: "terminology";
+         program {
+            signal: "popmedia,movie"; source: "terminology";
             action: STATE_SET "movie" 0.0;
             transition: DECELERATE 0.2;
             target: "terminology.popmedia";
          }
-         program { name: "popmedia_img2";
-            signal: "popmedia,image";
-            source: "terminology";
+         program {
+            signal: "popmedia,image"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.2;
             target: "popmedia_clip";
@@ -703,9 +1095,8 @@ part { name: "bell_base";
             target: "popmedia_glintclip";
             target: "popmedia_shine";
          }
-         program { name: "popmedia_scale2";
-            signal: "popmedia,scale";
-            source: "terminology";
+         program {
+            signal: "popmedia,scale"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.2;
             target: "popmedia_clip";
@@ -718,9 +1109,8 @@ part { name: "bell_base";
             target: "popmedia_glintclip";
             target: "popmedia_shine";
          }
-         program { name: "popmedia_edje2";
-            signal: "popmedia,edje";
-            source: "terminology";
+         program {
+            signal: "popmedia,edje"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.2;
             target: "popmedia_clip";
@@ -733,9 +1123,8 @@ part { name: "bell_base";
             target: "popmedia_glintclip";
             target: "popmedia_shine";
          }
-         program { name: "popmedia_mov2";
-            signal: "popmedia,movie";
-            source: "terminology";
+         program {
+            signal: "popmedia,movie"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.2;
             target: "popmedia_clip";
@@ -801,29 +1190,26 @@ part { name: "bell_base";
                align: 0.5 1.0;
             }
          }
-         program { name: "cmdshow0";
-            signal: "cmdbox,show";
-            source: "terminology";
+         program {
+            signal: "cmdbox,show"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.4;
             target: "cmdclip";
          }
-         program { name: "cmdshow";
-            signal: "cmdbox,show";
-            source: "terminology";
+         program {
+            signal: "cmdbox,show"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: SPRING 0.4 0.5 4;
             target: "terminology.cmdbox";
          }
-         program { name: "cmdhide";
-            signal: "cmdbox,hide";
-            source: "terminology";
+         program {
+            signal: "cmdbox,hide"; source: "terminology";
             action: STATE_SET "default" 0.0;
             transition: ACCELERATE 0.5;
             target: "terminology.cmdbox";
             target: "cmdclip";
          }
-         
+
          ////////////////////////////////////////////////////////////////////
          // overlayed options and controls
          part { name: "terminology.about"; type: SWALLOW;
@@ -845,28 +1231,26 @@ part { name: "bell_base";
                rel2.relative: 1.0 1.0;
             }
          }
-         program { name: "ab_show";
-            signal: "about,show";
-            source: "terminology";
+         program {
+            signal: "about,show"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: SPRING 1.2 2.0 6;
             target: "terminology.about";
          }
-         program { name: "ab_hide";
-            signal: "about,hide";
-            source: "terminology";
+         program {
+            signal: "about,hide"; source: "terminology";
             action: STATE_SET "default" 0.0;
             transition: DECELERATE 0.6;
             target: "terminology.about";
          }
-         
+
          ////////////////////////////////////////////////////////////////////
          // swallow to hold invisile rect to click on to dismiss things
          part { name: "terminology.dismiss"; type: SWALLOW;
             description { state: "default" 0.0;
             }
          }
-         
+
          ////////////////////////////////////////////////////////////////////
          // overlayed options and controls
          part { name: "terminology.optdetails"; type: SWALLOW;
@@ -900,16 +1284,14 @@ part { name: "bell_base";
                }
             }
          }
-         program { name: "opdt_show";
-            signal: "optdetails,show";
-            source: "terminology";
+         program {
+            signal: "optdetails,show"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.4;
             target: "terminology.optdetails";
          }
-         program { name: "opdt_hide";
-            signal: "optdetails,hide";
-            source: "terminology";
+         program {
+            signal: "optdetails,hide"; source: "terminology";
             action: STATE_SET "default" 0.0;
             transition: DECELERATE 0.2;
             target: "terminology.optdetails";
@@ -918,7 +1300,7 @@ part { name: "bell_base";
          program { name: "opdt_hide2";
             action: SIGNAL_EMIT "optdetails,hide,done" "terminology";
          }
-         
+
          part { name: "terminology.options"; type: SWALLOW;
             scale: 1;
             description { state: "default" 0.0;
@@ -946,21 +1328,19 @@ part { name: "bell_base";
                }
             }
          }
-         program { name: "op_show";
-            signal: "options,show";
-            source: "terminology";
+         program {
+            signal: "options,show"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.4;
             target: "terminology.options";
          }
-         program { name: "op_hide";
-            signal: "options,hide";
-            source: "terminology";
+         program {
+            signal: "options,hide"; source: "terminology";
             action: STATE_SET "default" 0.0;
             transition: DECELERATE 0.6;
             target: "terminology.options";
          }
-         
+
          part { name: "terminology.controls"; type: SWALLOW;
             scale: 1;
             description { state: "default" 0.0;
@@ -990,50 +1370,48 @@ part { name: "bell_base";
                }
             }
          }
-         program { name: "ct_show";
-            signal: "controls,show";
-            source: "terminology";
+         program {
+            signal: "controls,show"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.3;
             target: "terminology.controls";
          }
-         program { name: "ct_hide";
-            signal: "controls,hide";
-            source: "terminology";
+         program {
+            signal: "controls,hide"; source: "terminology";
             action: STATE_SET "default" 0.0;
             transition: DECELERATE 0.5;
             target: "terminology.controls";
          }
       }
    }
-   
-//////////////////////////////////////////////////////////////////////////////
+
+   //////////////////////////////////////////////////////////////////////////////
    //// the selection
    // selections come in 5 modes:
-   // 
+   //
    // oneline (also multiple lines but all fill the row):
    // |  #########   |
-   // 
+   //
    // disjoint:
    // |       #######|
    // |##            |
-   // 
+   //
    // default:
    // |   ###########|
    // |#########     |
-   // 
+   //
    // topfull:
    // |##############|
    // |######        |
-   // 
+   //
    // bottomfull:
    // |        ######|
    // |##############|
-#define PATCOL   255 248 51 128
-#define PATCOL2  255 248 51 144
-#define OUTCOL   255 248 51 128
-#define OUTCOL2  255 248 51 255
-   
+   #define PATCOL   255 248 51 128
+   #define PATCOL2  255 248 51 144
+   #define OUTCOL   255 248 51 128
+   #define OUTCOL2  255 248 51 255
+
    group { name: "terminology/selection";
       images {
          image: "sl_stripe.png" COMP;
@@ -1089,7 +1467,7 @@ part { name: "bell_base";
                color: PATCOL2;
             }
          }
-         
+
          // clips that clip the above pattern images to occupy specific
          // regions of the object (or be invisible since clip is invisible)
          part { name: "top_clip"; type: RECT;
@@ -1131,12 +1509,12 @@ part { name: "bell_base";
                visible: 0;
             }
          }
-         
+
          // the outline around the selection...
-#define TARGETS \
-target: "top_clip"; target: "middle_clip"; target: "bottom_clip"; \
-target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: "4.clip"
-         
+         #define TARGETS \
+         target: "top_clip"; target: "middle_clip"; target: "bottom_clip"; \
+         target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: "4.clip"
+
          part { name: "0.clip"; type: RECT;
             mouse_events: 0;
             description { state: "default" 0.0;    visible: 0; rel1.offset: -100 -100; rel2.offset: 101 101; }
@@ -1177,7 +1555,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
             description { state: "topfull" 0.0;    visible: 0; rel1.offset: -100 -100; rel2.offset: 101 101; }
             description { state: "bottomfull" 0.0; visible: 1; rel1.offset: -100 -100; rel2.offset: 101 101; }
          }
-         
+
          // oneline (also multiple lines but all fill the row):
          // |  #########   |
          part { name: "0.left";
@@ -1286,7 +1664,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          // |##            |
          part { name: "1.left";
             mouse_events: 0;
-            clip_to: "1.clip"; 
+            clip_to: "1.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "terminology.top_left";
@@ -1310,7 +1688,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "1.right";
             mouse_events: 0;
-            clip_to: "1.clip"; 
+            clip_to: "1.clip";
             description { state: "default" 0.0;
                rel1 {
                   to_y: "terminology.top_left";
@@ -1334,7 +1712,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "1.top";
             mouse_events: 0;
-            clip_to: "1.clip"; 
+            clip_to: "1.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "1.left";
@@ -1357,7 +1735,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "1.bottom";
             mouse_events: 0;
-            clip_to: "1.clip"; 
+            clip_to: "1.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "1.left";
@@ -1380,7 +1758,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "1.left2";
             mouse_events: 0;
-            clip_to: "1.clip"; 
+            clip_to: "1.clip";
             description { state: "default" 0.0;
                rel1 {
                   to_y: "terminology.bottom_right";
@@ -1403,7 +1781,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "1.right2";
             mouse_events: 0;
-            clip_to: "1.clip"; 
+            clip_to: "1.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "terminology.bottom_right";
@@ -1427,7 +1805,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "1.top2";
             mouse_events: 0;
-            clip_to: "1.clip"; 
+            clip_to: "1.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "1.left2";
@@ -1450,7 +1828,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "1.bottom2";
             mouse_events: 0;
-            clip_to: "1.clip"; 
+            clip_to: "1.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "1.left2";
@@ -1483,7 +1861,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          // |#########     |
          part { name: "2.topkink";
             mouse_events: 0;
-            clip_to: "2.clip"; 
+            clip_to: "2.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "top_clip";
@@ -1506,7 +1884,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "2.bottomkink";
             mouse_events: 0;
-            clip_to: "2.clip"; 
+            clip_to: "2.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "bottom_clip";
@@ -1529,7 +1907,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "2.left";
             mouse_events: 0;
-            clip_to: "2.clip"; 
+            clip_to: "2.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "middle_clip";
@@ -1552,7 +1930,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "2.right";
             mouse_events: 0;
-            clip_to: "2.clip"; 
+            clip_to: "2.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "top_clip";
@@ -1575,7 +1953,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "2.top";
             mouse_events: 0;
-            clip_to: "2.clip"; 
+            clip_to: "2.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "2.topkink";
@@ -1598,7 +1976,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "2.top2";
             mouse_events: 0;
-            clip_to: "2.clip"; 
+            clip_to: "2.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "2.left";
@@ -1621,7 +1999,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "2.bottom";
             mouse_events: 0;
-            clip_to: "2.clip"; 
+            clip_to: "2.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "2.left";
@@ -1644,7 +2022,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "2.bottom2";
             mouse_events: 0;
-            clip_to: "2.clip"; 
+            clip_to: "2.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "2.bottomkink";
@@ -1677,7 +2055,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          // |######        |
          part { name: "3.bottomkink";
             mouse_events: 0;
-            clip_to: "3.clip"; 
+            clip_to: "3.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "bottom_clip";
@@ -1700,7 +2078,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "3.left";
             mouse_events: 0;
-            clip_to: "3.clip"; 
+            clip_to: "3.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "top_clip";
@@ -1723,7 +2101,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "3.right";
             mouse_events: 0;
-            clip_to: "3.clip"; 
+            clip_to: "3.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "top_clip";
@@ -1746,7 +2124,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "3.top";
             mouse_events: 0;
-            clip_to: "3.clip"; 
+            clip_to: "3.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "3.left";
@@ -1769,7 +2147,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "3.bottom";
             mouse_events: 0;
-            clip_to: "3.clip"; 
+            clip_to: "3.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "3.left";
@@ -1792,7 +2170,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "3.bottom2";
             mouse_events: 0;
-            clip_to: "3.clip"; 
+            clip_to: "3.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "3.bottomkink";
@@ -1825,7 +2203,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          // |##############|
          part { name: "4.topkink";
             mouse_events: 0;
-            clip_to: "4.clip"; 
+            clip_to: "4.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "top_clip";
@@ -1848,7 +2226,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "4.left";
             mouse_events: 0;
-            clip_to: "4.clip"; 
+            clip_to: "4.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "middle_clip";
@@ -1871,7 +2249,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "4.right";
             mouse_events: 0;
-            clip_to: "4.clip"; 
+            clip_to: "4.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "top_clip";
@@ -1893,7 +2271,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "4.top";
             mouse_events: 0;
-            clip_to: "4.clip"; 
+            clip_to: "4.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "4.topkink";
@@ -1916,7 +2294,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "4.top2";
             mouse_events: 0;
-            clip_to: "4.clip"; 
+            clip_to: "4.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "4.left";
@@ -1939,7 +2317,7 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
          }
          part { name: "4.bottom";
             mouse_events: 0;
-            clip_to: "4.clip"; 
+            clip_to: "4.clip";
             description { state: "default" 0.0;
                rel1 {
                   to: "4.left";
@@ -1960,53 +2338,51 @@ target: "0.clip"; target: "1.clip"; target: "2.clip"; target: "3.clip"; target: 
                color: OUTCOL2;
             }
          }
-         program { name: "bottomfull";
-            signal: "mode,bottomfull";
-            source: "terminology";
+         program {
+            signal: "mode,bottomfull"; source: "terminology";
             action: STATE_SET "bottomfull" 0.0;
             TARGETS;
          }
 
-#define SELPULSE \
-target: "background_top"; \
-target: "background_middle"; \
-target: "background_bottom"; \
-target: "0.left"; \
-target: "0.right"; \
-target: "0.top"; \
-target: "0.bottom"; \
-target: "1.left"; \
-target: "1.right"; \
-target: "1.top"; \
-target: "1.bottom"; \
-target: "1.left2"; \
-target: "1.right2"; \
-target: "1.top2"; \
-target: "1.bottom2"; \
-target: "2.topkink"; \
-target: "2.bottomkink"; \
-target: "2.left"; \
-target: "2.right"; \
-target: "2.top2"; \
-target: "2.top"; \
-target: "2.bottom"; \
-target: "2.bottom2"; \
-target: "3.bottomkink"; \
-target: "3.left"; \
-target: "3.right"; \
-target: "3.top"; \
-target: "3.bottom"; \
-target: "3.bottom2"; \
-target: "4.topkink"; \
-target: "4.left"; \
-target: "4.right"; \
-target: "4.top2"; \
-target: "4.top"; \
-target: "4.bottom"
-         
+         #define SELPULSE \
+         target: "background_top"; \
+         target: "background_middle"; \
+         target: "background_bottom"; \
+         target: "0.left"; \
+         target: "0.right"; \
+         target: "0.top"; \
+         target: "0.bottom"; \
+         target: "1.left"; \
+         target: "1.right"; \
+         target: "1.top"; \
+         target: "1.bottom"; \
+         target: "1.left2"; \
+         target: "1.right2"; \
+         target: "1.top2"; \
+         target: "1.bottom2"; \
+         target: "2.topkink"; \
+         target: "2.bottomkink"; \
+         target: "2.left"; \
+         target: "2.right"; \
+         target: "2.top2"; \
+         target: "2.top"; \
+         target: "2.bottom"; \
+         target: "2.bottom2"; \
+         target: "3.bottomkink"; \
+         target: "3.left"; \
+         target: "3.right"; \
+         target: "3.top"; \
+         target: "3.bottom"; \
+         target: "3.bottom2"; \
+         target: "4.topkink"; \
+         target: "4.left"; \
+         target: "4.right"; \
+         target: "4.top2"; \
+         target: "4.top"; \
+         target: "4.bottom"
+
          program { name: "selpulse";
-            signal: "show";
-            source: "";
+            signal: "show"; source: "";
             action: STATE_SET "pulse" 0.0;
             transition: SINUSOIDAL 0.5;
             SELPULSE;
@@ -2018,7 +2394,7 @@ target: "4.bottom"
             SELPULSE;
             after: "selpulse";
          }
-         
+
          // top and bottom swallows used to coimmunicate via min/max size the
          // size of the top and bottom lines
          part { name: "terminology.top_left"; type: SWALLOW;
@@ -2037,7 +2413,7 @@ target: "4.bottom"
                visible: 0;
             }
          }
-         
+
          // blinky cursors indicating you can drag the ends of the selection
          part { name: "cursor.top_left"; type: RECT;
             mouse_events: 0;
@@ -2135,8 +2511,7 @@ target: "4.bottom"
                color: 0 0 0 0;
             }
             program { name: "bottom_right.blink";
-               signal: "mouse,in";
-               source: "zone.bottom_right";
+               signal: "mouse,in"; source: "zone.bottom_right";
                action: STATE_SET "fading" 0.0;
                target: "cursor_blink.bottom_right";
                after: "bottom_right.fade";
@@ -2148,146 +2523,167 @@ target: "4.bottom"
                after: "bottom_right.blink";
             }
             program { name: "bottom_right.stop";
-               signal: "mouse,out";
-               source: "zone.bottom_right";
+               signal: "mouse,out"; source: "zone.bottom_right";
                action: STATE_SET "default" 0.0;
                target: "cursor_blink.bottom_right";
             }
          }
       }
    }
-   
-   
-//////////////////////////////////////////////////////////////////////////////
+
+
+   //////////////////////////////////////////////////////////////////////////////
    //// the cursor to show where text is typed
    group { name: "terminology/cursor";
+      #define FRAME_DURATION 0.07
       images {
-        image: "cr_key.png" COMP;
-        image: "cr_out.png" COMP;
-        image: "cr_pulse.png" COMP;
-        image: "cr_glow.png" COMP;
-        image: "pika_01.png" COMP;
-        image: "pika_02.png" COMP;
-        image: "pika_03.png" COMP;
-        image: "pika_04.png" COMP;
-        image: "pika_05.png" COMP;
-        image: "pika_06.png" COMP;
-        image: "pika_07.png" COMP;
-        image: "pika_08.png" COMP;
-        image: "pika_09.png" COMP;
-        image: "pika_10.png" COMP;
-        image: "pika_11.png" COMP;
-        image: "pika_12.png" COMP;
-        image: "pika_13.png" COMP;
-        image: "pika_14.png" COMP;
-        image: "pika_15.png" COMP;
-        image: "pika_16.png" COMP;
-        image: "pika_17.png" COMP;
-        image: "pika_18.png" COMP;
-        image: "thunder_01.png" COMP;
-        image: "thunder_02.png" COMP;
-        image: "thunder_03.png" COMP;
-        image: "thunder_04.png" COMP;
-        image: "thunder_05.png" COMP;
-        image: "thunder_06.png" COMP;
-        image: "thunder_07.png" COMP;
-        image: "thunder_08.png" COMP;
-        image: "thunder_09.png" COMP;
-        image: "thunder_10.png" COMP;
-        image: "clear.png" COMP;
+         image: "cr_key.png" COMP;
+         image: "cr_out.png" COMP;
+         image: "cr_pulse.png" COMP;
+         image: "cr_glow.png" COMP;
+         image: "pika_01.png" COMP;
+         image: "pika_02.png" COMP;
+         image: "pika_03.png" COMP;
+         image: "pika_04.png" COMP;
+         image: "pika_05.png" COMP;
+         image: "pika_06.png" COMP;
+         image: "pika_07.png" COMP;
+         image: "pika_08.png" COMP;
+         image: "pika_09.png" COMP;
+         image: "pika_10.png" COMP;
+         image: "pika_11.png" COMP;
+         image: "pika_12.png" COMP;
+         image: "pika_13.png" COMP;
+         image: "pika_14.png" COMP;
+         image: "pika_15.png" COMP;
+         image: "pika_16.png" COMP;
+         image: "pika_17.png" COMP;
+         image: "pika_18.png" COMP;
+         image: "thunder_01.png" COMP;
+         image: "thunder_02.png" COMP;
+         image: "thunder_03.png" COMP;
+         image: "thunder_04.png" COMP;
+         image: "thunder_05.png" COMP;
+         image: "thunder_06.png" COMP;
+         image: "thunder_07.png" COMP;
+         image: "thunder_08.png" COMP;
+         image: "thunder_09.png" COMP;
+         image: "thunder_10.png" COMP;
+         image: "clear.png" COMP;
+
+      }
+      sounds {
+         sample { name: "key-tap1" LOSSY 64;
+            source: "kbd-tap.wav";
+         }
+         sample { name: "key-tap2" LOSSY 64;
+            source: "kbd-tap2.wav";
+         }
+         sample { name: "key-tap3" LOSSY 64;
+            source: "kbd-tap3.wav";
+         }
+         sample { name: "key-tap4" LOSSY 64;
+            source: "kbd-tap4.wav";
+         }
+         sample { name: "key-tap5" LOSSY 64;
+            source: "kbd-tap5.wav";
+         }
       }
       parts {
-        part { name: "pika";
-		description { state: "default" 0.0;
-			min:  0 25;
-			max: 25 25;
-                        aspect: 2 2;
-			aspect_preference: VERTICAL;
-			rel1.relative: 4.0 0;
-			image.normal: "pika_01.png";
-			map.on: 1;
-		}
-		description { state: "greyed";
-			inherit: "default";
-			color: 120 120 120 255;
-		}
-		description { state: "anim1" 0.0;
-			inherit: "default";
-			image {
-				tween: "pika_01.png";
-				tween: "pika_02.png";
-				tween: "pika_03.png";
-				tween: "pika_04.png";
-				normal: "pika_01.png";
-			}
-		}
-                description { state: "run1" 0.0;
-                        inherit: "default";
-                        image {
-                                tween: "pika_09.png";
-                                tween: "pika_10.png";
-                                tween: "pika_11.png";
-                                tween: "pika_12.png";
-                                normal: "pika_09.png";
-                        }
-                        map.rotation.z: 35.0;
-                }
-                description { state: "alert1" 0.0;
-			inherit: "default";
-			image {
-				tween: "pika_13.png";
-				tween: "pika_14.png";
-				tween: "pika_15.png";
-				tween: "pika_16.png";
-				tween: "pika_17.png";
-				tween: "pika_18.png";
-				normal: "pika_13.png";
-			}
-		}
-        }
-        part { name: "thunder";
-		description { state: "default" 0.0;
-                        rel1.relative: 4.0 0.0;
-                        max: 95 21.5;
-                        min: 95 21.5;
-                        image {
-                                normal: "clear.png";
-                        }
-		}
-		description { state: "alert" 0.0;
-                        inherit: "default";
-                        image {
-				tween: "thunder_06.png";
-				tween: "thunder_07.png";
-				tween: "thunder_08.png";
-				tween: "thunder_09.png";
-				tween: "thunder_10.png";
-				normal: "thunder_06.png";
-			}
-		}
-        }
-        part { name: "bigthunder";
-		description { state: "default" 0.0;
-                        rel1.relative: 4.0 -5.5;
-                        max: 32.5 109;
-                        min: 32.5 109;
-                        image {
-                                normal: "clear.png";
-                        }
-		}
-		description { state: "alert" 0.0;
-                        inherit: "default";
-                        image {
-				tween: "thunder_01.png";
-				tween: "thunder_02.png";
-				tween: "thunder_03.png";
-				tween: "thunder_04.png";
-				tween: "thunder_05.png";
-				normal: "thunder_01.png";
-			}
-		}
-        }
 
+         part { name: "pika";
+            description { state: "default" 0.0;
+               min:  0 25;
+               max: 25 25;
+               aspect: 2 2;
+               aspect_preference: VERTICAL;
+               rel1.relative: 4.0 0;
+               image.normal: "pika_01.png";
+               map.on: 1;
+            }
+            description { state: "greyed";
+               inherit: "default";
+               color: 120 120 120 255;
+            }
+            description { state: "anim1" 0.0;
+               inherit: "default";
+               image {
+                  tween: "pika_01.png";
+                  tween: "pika_02.png";
+                  tween: "pika_03.png";
+                  tween: "pika_04.png";
+                  normal: "pika_01.png";
+               }
+            }
+            description { state: "pause" 0.0;
+               inherit: "default" 0.0;
+            }
+            description { state: "run1" 0.0;
+               inherit: "default";
+               image {
+                  tween: "pika_09.png";
+                  tween: "pika_10.png";
+                  tween: "pika_11.png";
+                  tween: "pika_12.png";
+                  normal: "pika_09.png";
+               }
+               map.rotation.z: 35.0;
+            }
+            description { state: "alert1" 0.0;
+               inherit: "default";
+               image {
+                  tween: "pika_13.png";
+                  tween: "pika_14.png";
+                  tween: "pika_15.png";
+                  tween: "pika_16.png";
+                  tween: "pika_17.png";
+                  tween: "pika_18.png";
+                  normal: "pika_13.png";
+               }
+            }
+         }
+         part { name: "thunder";
+            description { state: "default" 0.0;
+               rel1.relative: 4.0 0.0;
+               max: 95 21.5;
+               min: 95 21.5;
+               image {
+                  normal: "clear.png";
+               }
+            }
+            description { state: "alert" 0.0;
+               inherit: "default";
+               image {
+                  tween: "thunder_06.png";
+                  tween: "thunder_07.png";
+                  tween: "thunder_08.png";
+                  tween: "thunder_09.png";
+                  tween: "thunder_10.png";
+                  normal: "thunder_06.png";
+               }
+            }
+         }
+         part { name: "bigthunder";
+            description { state: "default" 0.0;
+               rel1.relative: 4.0 -5.5;
+               max: 32.5 109;
+               min: 32.5 109;
+               image {
+                  normal: "clear.png";
+               }
+            }
+            description { state: "alert" 0.0;
+               inherit: "default";
+               image {
+                  tween: "thunder_01.png";
+                  tween: "thunder_02.png";
+                  tween: "thunder_03.png";
+                  tween: "thunder_04.png";
+                  tween: "thunder_05.png";
+                  normal: "thunder_01.png";
+               }
+            }
+         }
          part { name: "key";
             mouse_events: 0;
             description { state: "default" 0.0;
@@ -2376,15 +2772,13 @@ target: "4.bottom"
          }
          programs {
             program { name: "focus_in_noblink";
-               signal: "focus,in,noblink";
-               source: "terminology";
+               signal: "focus,in,noblink"; source: "terminology";
                action: STATE_SET "focused" 0.0;
                target: "glow";
                target: "outline";
             }
             program { name: "focus_in";
-               signal: "focus,in";
-               source: "terminology";
+               signal: "focus,in"; source: "terminology";
                action: STATE_SET "focused" 0.0;
                target: "glow";
                target: "outline";
@@ -2433,6 +2827,35 @@ target: "4.bottom"
                target: "glow";
                target: "outline";
             }
+            program {
+               signal: "key,down"; source: "terminology";
+               script {
+                  #if (EFL_VERSION_MAJOR > 1) || (EFL_VERSION_MINOR >= 8)
+                  new buf[32];
+                  snprintf(buf, 31, "key-down%i", (rand() % 5) + 1);
+                  run_program(get_program_id(buf));
+                  #else
+                  run_program(PROGRAM:"key-down4"); // chosen by a fair dice roll
+                  // guaranteed to be random.
+                  // http://xkcd.com/221/
+                  #endif
+               }
+            }
+            program { name: "key-down1";
+               action: PLAY_SAMPLE "key-tap1" 1.0;
+            }
+            program { name: "key-down2";
+               action: PLAY_SAMPLE "key-tap2" 1.0;
+            }
+            program { name: "key-down3";
+               action: PLAY_SAMPLE "key-tap3" 1.0;
+            }
+            program { name: "key-down4";
+               action: PLAY_SAMPLE "key-tap4" 1.0;
+            }
+            program { name: "key-down5";
+               action: PLAY_SAMPLE "key-tap5" 1.0;
+            }
             program { name: "key";
                signal: "key,down";
                source: "terminology";
@@ -2459,96 +2882,98 @@ target: "4.bottom"
                after: "anim";
             }
             program { name: "anim";
-	    	signal: "focus,in";
-	    	source: "terminology";
-	    	action: STATE_SET "anim1" 0.0;
-	    	transition: LINEAR FRAME_DURATION*6;
-	    	target: "pika";
-	    	after: "loop";
-	    }
-	    program { name: "loop";
-	    	action: STATE_SET "anim2" 0.0;
-	    	transition: LINEAR FRAME_DURATION*6;
-	    	target: "pika";
-	    	after: "anim";
-	    }
-	    program { name: "stop_anim";
-	    	signal: "focus,out";
-	    	source: "terminology";
-	    	action: ACTION_STOP;
-	    	target: "anim";
-	    	target: "loop";
-	    	target: "bellrotate1";
-	    	after: "stop_anim2";
-	    }
-	    program { name: "stop_anim2";
-	    	action: STATE_SET "greyed" 0.0;
-	    	transition: LINEAR FRAME_DURATION*6;
-	    	target: "pika";
-	    }
+               signal: "focus,in";
+               source: "terminology";
+               action: STATE_SET "anim1" 0.0;
+               transition: LINEAR FRAME_DURATION*6;
+               target: "pika";
+               after: "loop";
+            }
+            program { name: "loop";
+               action: STATE_SET "pause" 0.0;
+               transition: LINEAR FRAME_DURATION*6;
+               target: "pika";
+               after: "anim";
+            }
+            program { name: "stop_anim";
+               signal: "focus,out";
+               source: "terminology";
+               action: ACTION_STOP;
+               target: "anim";
+               target: "loop";
+               target: "bellrotate1";
+               after: "stop_anim2";
+            }
+            program { name: "stop_anim2";
+               action: STATE_SET "greyed" 0.0;
+               transition: LINEAR FRAME_DURATION*6;
+               target: "pika";
+            }
             program { name: "suspendallatbell";
-                signal: "bell";
-	    	source: "terminology";
-                action: ACTION_STOP;
-                target: "run";
-                after: "bellrotate1";
+               signal: "bell";
+               source: "terminology";
+               action: ACTION_STOP;
+               target: "run";
+               after: "bellrotate1";
             }
             program { name: "suspendallatbellforthunder";
-                signal: "bell";
-	    	source: "terminology";
-                action: ACTION_STOP;
-                target: "run";
-                after: "thethunder";
+               signal: "bell";
+               source: "terminology";
+               action: ACTION_STOP;
+               target: "run";
+               after: "thethunder";
             }
             program { name: "thethunder";
-                action: STATE_SET "alert" 0.0;
-                transition: LINEAR 0.52;
-                target: "thunder";
-                after: "resetthunder";
+               action: STATE_SET "alert" 0.0;
+               transition: LINEAR 0.52;
+               target: "thunder";
+               after: "resetthunder";
             }
             program { name: "resetthunder";
-                action: STATE_SET "default" 0.0;
-                target: "thunder";
-                after: "anim";
+               action: STATE_SET "default" 0.0;
+               target: "thunder";
+               after: "anim";
             }
-           program { name: "suspendallatbellforbigthunder";
-                signal: "bell";
-	    	source: "terminology";
-                action: ACTION_STOP;
-                target: "run";
-                after: "thebigthunder";
+            program { name: "suspendallatbellforbigthunder";
+               signal: "bell";
+               source: "terminology";
+               action: ACTION_STOP;
+               target: "run";
+               after: "thebigthunder";
             }
             program { name: "thebigthunder";
-                action: STATE_SET "alert" 0.0;
-                transition: LINEAR 0.52;
-                target: "bigthunder";
-                after: "resetbigthunder";
+               action: STATE_SET "alert" 0.0;
+               transition: LINEAR 0.52;
+               target: "bigthunder";
+               after: "resetbigthunder";
             }
             program { name: "resetbigthunder";
-                action: STATE_SET "default" 0.0;
-                target: "bigthunder";
-                after: "anim";
+               action: STATE_SET "default" 0.0;
+               target: "bigthunder";
+               after: "anim";
             }
-	    program { name: "bellrotate1";
-	    	action: STATE_SET "alert1" 0.0;
-	    	transition: LINEAR 0.52;
-	    	target: "pika";
-                after: "anim";
-	    }
+            program { name: "bellrotate1";
+               action: STATE_SET "alert1" 0.0;
+               transition: LINEAR 0.52;
+               target: "pika";
+               after: "anim";
+            }
          }
       }
    }
-//////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////
    //// an object to contain the selection tool used for selecting tabs (with
    //// a glow grid of terms
    group { name: "terminology/sel/base";
       images {
-        image: "pm_overlay.png" COMP;
-        image: "pm_fill.png" COMP;
-        image: "bg_shadow.png" COMP;
-        image: "inset_shadow.png" COMP;
+         image: "pm_overlay.png" COMP;
+         image: "pm_fill.png" COMP;
+         image: "bg_shadow.png" COMP;
+         image: "inset_shadow.png" COMP;
       }
       parts {
+         ////////////////////////////////////////////////////////////////////
+         // background and shadows
          part { name: "shadow";
             mouse_events: 0;
             description { state: "default" 0.0;
@@ -2580,7 +3005,9 @@ target: "4.bottom"
             action: STATE_SET "default" 0.0;
             target: "fill";
          }
-         
+
+         ////////////////////////////////////////////////////////////////////
+         // content (where the grid of terms goes)
          part { name: "clip"; type: RECT;
             description { state: "default" 0.0;
             }
@@ -2590,7 +3017,9 @@ target: "4.bottom"
             description { state: "default" 0.0;
             }
          }
-         
+
+         ////////////////////////////////////////////////////////////////////
+         // fancy stuff on top
          part { name: "overlay";
             mouse_events: 0;
             description { state: "default" 0.0;
@@ -2632,17 +3061,22 @@ target: "4.bottom"
          }
       }
    }
-   
+
    group { name: "terminology/sel/item";
       images {
-        image: "bg_bevel.png" COMP;
-        image: "bg_shine.png" COMP;
-        image: "bg_glint.png" COMP;
-        image: "pm_shadow.png" COMP;
-        image: "cr_glow.png" COMP;
-        image: "pika_bg.png" COMP;
+         image: "bg_bevel.png" COMP;
+         image: "bg_shine.png" COMP;
+         image: "bg_glint.png" COMP;
+         image: "pm_shadow.png" COMP;
+         image: "cr_glow.png" COMP;
+         image: "bg_led_glow.png" COMP;
+         image: "bg_led_base.png" COMP;
+         image: "bg_led.png" COMP;
+         image: "bg_led_strobe.png" COMP;
       }
       parts {
+         ////////////////////////////////////////////////////////////////////
+         // base background and selection image
          part { name: "clip"; type: RECT;
             description { state: "default" 0.0;
                rel1.to: "terminology.content";
@@ -2694,6 +3128,9 @@ target: "4.bottom"
                color: 255 248 51 255;
             }
          }
+
+         ////////////////////////////////////////////////////////////////////
+         // swallowed terminal content + bg inside it
          part { name: "base"; type: RECT;
             clip_to: "clip";
             description { state: "default" 0.0;
@@ -2702,35 +3139,6 @@ target: "4.bottom"
                rel2.to: "terminology.content";
             }
          }
-         part { name: "terminology.background"; type: SWALLOW;
-            description { state: "default" 0.0;
-               rel1.to: "terminology.content";
-               rel2.to: "terminology.content";
-            }
-            description { state: "image" 0.0;
-               inherit: "default" 0.0;
-            }
-            description { state: "scale" 0.0;
-               inherit: "default" 0.0;
-            }
-            description { state: "edje" 0.0;
-               inherit: "default" 0.0;
-            }
-            description { state: "movie" 0.0;
-               inherit: "default" 0.0;
-            }
-         }
-     /*    part { name: "pikabg"; 
-                type: IMAGE;
-                description { state: "default" 0.0;
-                        rel1.to: "terminology.background";
-                        rel2.to: "terminology.background";
-                        image {
-                                normal: "pika_bg.png";
-                        }
-                }
-         }
-         */
          part { name: "terminology.content"; type: SWALLOW;
             clip_to: "clip";
             description { state: "default" 0.0;
@@ -2772,7 +3180,9 @@ target: "4.bottom"
             target: "clip";
             target: "glow";
          }
-         
+
+         ////////////////////////////////////////////////////////////////////
+         // fancy stuff over the top of the terminal for shading and labelling
          part { name: "overlay";
             mouse_events: 0;
             description { state: "default" 0.0;
@@ -2823,6 +3233,9 @@ target: "4.bottom"
                rel2.to: "terminology.content";
             }
          }
+
+         ////////////////////////////////////////////////////////////////////
+         // fancy stuff on top
          part { name: "glint";
             mouse_events: 0;
             clip_to: "clip2";
@@ -2857,15 +3270,147 @@ target: "4.bottom"
                aspect_preference: HORIZONTAL;
             }
          }
+
+         ////////////////////////////////////////////////////////////////////
+         // visual bell - spinning red siren light
+         part { name: "bell_glow";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               visible: 0;
+               color: 255 255 255 0;
+               rel1.to: "bell_base";
+               rel2.to: "bell_base";
+               min: 200 200;
+               fill.smooth: 0;
+               image.normal: "bg_led_glow.png";
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "bell_base";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               visible: 0;
+               color: 255 255 255 0;
+               min: 32 32;
+               max: 32 32;
+               rel1.to: "terminology.content";
+               rel2.to: "terminology.content";
+               align: 1.0 1.0;
+               image.normal: "bg_led_base.png";
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "bell";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               visible: 0;
+               color: 255 255 255 0;
+               rel1.to: "bell_base";
+               rel2.to: "bell_base";
+               image.normal: "bg_led.png";
+            }
+            description { state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part { name: "bell_strobe";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               fixed: 1 1;
+               visible: 0;
+               color: 255 255 255 0;
+               rel1.to: "bell";
+               rel2.to: "bell";
+               image.normal: "bg_led_strobe.png";
+               map {
+                  on: 1;
+                  smooth: 1;
+                  rotation.center: "bell";
+               }
+            }
+            description { state: "spin" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+               map.rotation.z: 36.0;
+            }
+            description { state: "spin_done" 0.0;
+               inherit: "spin" 0.0;
+               map.rotation.z: 720.0;
+            }
+            description { state: "spin_done2" 0.0;
+               inherit: "spin" 0.0;
+               map.rotation.z: 1440.0;
+            }
+         }
+         program {
+            signal: "bell"; source: "terminology";
+            action: STATE_SET "default" 0.0;
+            target: "bell_base";
+            target: "bell";
+            target: "bell_strobe";
+            target: "bell_glow";
+            after: "bell";
+         }
+         program { name: "bell";
+            action: STATE_SET "visible" 0.0;
+            target: "bell_base";
+            target: "bell_glow";
+            after: "bell2";
+         }
+         program { name: "bell2";
+            action: STATE_SET "visible" 0.0;
+            transition: DECELERATE 0.1;
+            target: "bell";
+            target: "bell_glow";
+            after: "bell3";
+         }
+         program { name: "bell3";
+            action: STATE_SET "spin" 0.0;
+            transition: LINEAR 0.1;
+            target: "bell_strobe";
+            after: "bell4.2";
+         }
+         program { name: "bell4.2";
+            action: STATE_SET "spin_done" 0.0;
+            transition: LINEAR 0.9;
+            target: "bell_strobe";
+            after: "bell4.3";
+         }
+         program { name: "bell4.3";
+            action: STATE_SET "spin_done2" 0.0;
+            transition: LINEAR 1.0;
+            target: "bell_strobe";
+            after: "bell4.4";
+         }
+         program { name: "bell4.4";
+            action: STATE_SET "spin_done" 0.0;
+            target: "bell_strobe";
+            after: "bell4.3";
+         }
       }
    }
-//////////////////////////////////////////////////////////////////////////////
+
+   //////////////////////////////////////////////////////////////////////////////
    //// an object overlayd on text that is a link
    group { name: "terminology/link";
       images {
-        image: "lk_bottom.png" COMP;
-        image: "lk_left.png" COMP;
-        image: "lk_right.png" COMP;
+         image: "lk_bottom.png" COMP;
+         image: "lk_left.png" COMP;
+         image: "lk_right.png" COMP;
       }
       parts {
          part { name: "bottom";
@@ -2945,8 +3490,7 @@ target: "4.bottom"
          }
          programs {
             program { name: "show";
-               signal: "show";
-               source: "";
+               signal: "show"; source: "";
                action: STATE_SET "out" 0.0;
                transition: LINEAR 0.3;
                target: "l";
@@ -2971,7 +3515,7 @@ target: "4.bottom"
       }
    }
 
-//////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////
    //// the multimedia controls
    group { name: "terminology/mediabusy";
       images {
@@ -2980,16 +3524,16 @@ target: "4.bottom"
          image: "media_busy_progress.png" COMP;
       }
       script {
-       public message(Msg_Type:type, id, ...) {
-          if ((type == MSG_FLOAT) && (id == 1)) {
-             new Float:val;
-             val = getfarg(2);
-             // val 0.0 -. 1.0 percentage
-             custom_state(PART:"progress", "default", 0.0);
-             set_state_val(PART:"progress", STATE_REL2, val, 1.0);
-             set_state(PART:"progress", "custom", 0.0);
-          }
-       }
+         public message(Msg_Type:type, id, ...) {
+            if ((type == MSG_FLOAT) && (id == 1)) {
+               new Float:val;
+               val = getfarg(2);
+               // val 0.0 -. 1.0 percentage
+               custom_state(PART:"progress", "default", 0.0);
+               set_state_val(PART:"progress", STATE_REL2, val, 1.0);
+               set_state(PART:"progress", "custom", 0.0);
+            }
+         }
       }
       parts {
          part { name: "progress_area"; type: SPACER;
@@ -3064,16 +3608,14 @@ target: "4.bottom"
          }
       }
       programs {
-         program { name: "busy";
-            signal: "busy";
-            source: "terminology";
+         program {
+            signal: "busy"; source: "terminology";
             action: STATE_SET "visible" 0.0;
             transition: DECELERATE 0.5;
             target: "fade";
          }
          program { name: "spin1";
-            signal: "busy";
-            source: "terminology";
+            signal: "busy"; source: "terminology";
             action: STATE_SET "spin" 0.0;
             transition: LINEAR 0.5;
             target: "knob_spinner";
@@ -3084,31 +3626,30 @@ target: "4.bottom"
             target: "knob_spinner";
             after: "spin1";
          }
-//         program { name: "downloading";
-//            signal: "busy";
-//            source: "terminology";
-//            action: STATE_SET "default" 0.0;
-//         }
-         program { name: "done";
-            signal: "done";
-            source: "terminology";
+         //         program { name: "downloading";
+         //            signal: "busy";
+         //            source: "terminology";
+         //            action: STATE_SET "default" 0.0;
+         //         }
+         program {
+            signal: "done"; source: "terminology";
             action: STATE_SET "default" 0.0;
             transition: DECELERATE 1.5;
             target: "fade";
          }
       }
    }
-//////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////
    //// the multimedia controls
    group { name: "terminology/mediactrl";
       images {
-        image: "media_bg.png" COMP;
-        image: "media_play.png" COMP;
-        image: "media_stop.png" COMP;
-        image: "media_pause.png" COMP;
-        image: "media_line.png" COMP;
-        image: "media_knob_vol.png" COMP;
-        image: "media_knob_pos.png" COMP;
+         image: "media_bg.png" COMP;
+         image: "media_play.png" COMP;
+         image: "media_stop.png" COMP;
+         image: "media_pause.png" COMP;
+         image: "media_line.png" COMP;
+         image: "media_knob_vol.png" COMP;
+         image: "media_knob_pos.png" COMP;
       }
       parts {
          part { name: "media_clip"; type: RECT;
@@ -3233,70 +3774,61 @@ target: "4.bottom"
          }
       }
       programs {
-         program { name: "media_mouse_in";
-            signal: "mouse,in";
-            source: "media_bg";
+         program {
+            signal: "mouse,in"; source: "media_bg";
             action: STATE_SET "expanded" 0.0;
             transition: SINUSOIDAL 0.4 CURRENT;
             target: "media_bg";
          }
-         program { name: "media_mouse_out";
-            signal: "mouse,out";
-            source: "media_bg";
+         program {
+            signal: "mouse,out"; source: "media_bg";
             action: STATE_SET "default" 0.0;
             transition: SINUSOIDAL 0.4 CURRENT;
             target: "media_bg";
          }
-         program { name: "media_pause_click";
-            signal: "mouse,up,*";
-            source: "play";
+         program {
+            signal: "mouse,up,*"; source: "play";
             filter: "play" "default";
             action: SIGNAL_EMIT "pause" "";
          }
-         program { name: "media_play_click";
-            signal: "mouse,up,1";
-            source: "play";
+         program {
+            signal: "mouse,up,1"; source: "play";
             filter: "play" "paused";
             action: SIGNAL_EMIT "play" "";
          }
-         program { name: "media_stop_click";
-            signal: "mouse,up,1";
-            source: "stop";
+         program {
+            signal: "mouse,up,1"; source: "stop";
             action: SIGNAL_EMIT "stop" "";
          }
-         program { name: "media_signal_pause";
-            signal: "pause,set";
-            source: "terminology";
+         program {
+            signal: "pause,set"; source: "terminology";
             action: STATE_SET "paused" 0.0;
             target: "play";
          }
-         program { name: "media_signal_play";
-            signal: "play,set";
-            source: "terminology";
+         program {
+            signal: "play,set"; source: "terminology";
             action: STATE_SET "default" 0.0;
             target: "play";
          }
-         program { name: "media_signal_mute";
-            signal: "mute,set";
-            source: "terminology";
+         program {
+            signal: "mute,set"; source: "terminology";
             action: STATE_SET "muted" 0.0;
             target: "terminology.voldrag";
          }
-         program { name: "media_signal_unmute";
-            signal: "mute,unset";
-            source: "terminology";
+         program {
+            signal: "mute,unset"; source: "terminology";
             action: STATE_SET "default" 0.0;
             target: "terminology.voldrag";
          }
       }
    }
 
-#define ICON(Grp, Img) \
+   #define ICON(Grp, Img) \
    group { name: "elm/icon/"##Grp##"/default"; min: 10 10; max: 80 80; \
       images.image: Img COMP; \
       parts { part { name: "base"; description { state: "default" 0.0; \
-      aspect: 1.0 1.0; aspect_preference: BOTH; image.normal: Img; \
-   } } } }
+               aspect: 1.0 1.0; aspect_preference: BOTH; image.normal: Img; \
+      } } } }
    ICON("new",      "icon_new.png");
    ICON("split-h",  "icon_split_h.png");
    ICON("split-v",  "icon_split_v.png");
@@ -3305,14 +3837,14 @@ target: "4.bottom"
    ICON("paste",    "icon_paste.png");
    ICON("settings", "icon_settings.png");
    ICON("about",    "icon_about.png");
-#undef ICON   
+   #undef ICON
 
-//////////////////////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////////////////////
    //// the about box content image
    group { name: "terminology/about";
       images {
-        image: "ab_base.png" COMP;
-        image: "ab_shell.png" COMP;
+         image: "ab_base.png" COMP;
+         image: "ab_shell.png" COMP;
       }
       styles {
          style { name: "aboutstyle";
@@ -3377,12 +3909,11 @@ target: "4.bottom"
                aspect_preference: BOTH;
                image.normal: "ab_shell.png";
             }
-         }                                              
+         }
       }
       programs {
-         program { name: "begin";
-            signal: "begin";
-            source: "terminology";
+         program {
+            signal: "begin"; source: "terminology";
             action: ACTION_STOP;
             target: "show";
             target: "show2";
@@ -3406,13 +3937,13 @@ target: "4.bottom"
          }
       }
    }
-   
-//////////////////////////////////////////////////////////////////////////////
+
+   //////////////////////////////////////////////////////////////////////////////
    //// used in the font selection dialog to give a base for black text
    //// previews so they are always visible
    group { name: "terminology/fontpreview";
       images {
-        image: "fn_shadow.png" COMP;
+         image: "fn_shadow.png" COMP;
       }
       parts {
          part { name: "shadow";
@@ -3447,7 +3978,7 @@ target: "4.bottom"
                rel2.to: "base";
                color: 255 255 255 255;
             }
-         }                                              
+         }
          part { name: "terminology.text.preview"; type: SWALLOW;
             clip_to: "clip";
             description { state: "default" 0.0;
@@ -3464,4 +3995,4 @@ target: "4.bottom"
       }
    }
 }
-//#include "pikacursor.edc"
+

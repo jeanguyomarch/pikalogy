@@ -23,4 +23,5 @@ Usage
 * In the directory of the pikalogy theme
   * `make` to compile the Edje file
   * `make play` to launch terminology with the pikalogy theme
-
+  * `sudo make install` to install the files
+  * `sudo make uninstall` to remove installed files

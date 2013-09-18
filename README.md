@@ -25,3 +25,8 @@ Usage
   * `make play` to launch terminology with the pikalogy theme
   * `sudo make install` to install the files
   * `sudo make uninstall` to remove installed files
+
+License
+=======
+
+MIT license (see LICENSE.md)

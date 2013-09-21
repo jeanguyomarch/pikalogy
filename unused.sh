@@ -3,7 +3,7 @@
 # Determines if there are unused files in the theme.
 #
 
-IGNORES="LICENSE.md Makefile README.md images pikalogy pikalogy.edc pikalogy.edj sounds used.sh"
+IGNORES="LICENSE.md Makefile README.md images pikalogy pikalogy.edc pikalogy.edj sounds unused.sh"
 
 dirs=". images sounds"
 for d in $dirs; do

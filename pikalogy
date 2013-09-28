@@ -1,4 +1,0 @@
-#!/bin/sh -e
-
-/usr/local/bin/terminology --theme="/usr/local/share/terminology/themes/pikalogy.edj"
-

@@ -1,5 +1,5 @@
 all:
-	edje_cc -v -id images -sd sounds pikalogy.edc
+	TERM=xterm edje_cc -v -id images -sd sounds pikalogy.edc
 
 clean:
 	rm -vf *.edj

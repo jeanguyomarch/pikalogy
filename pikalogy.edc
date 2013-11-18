@@ -3628,14 +3628,34 @@ collections {
       images {
          image: "ab_base.png" COMP;
          image: "ab_shell.png" COMP;
+         image: "ab_pika.png" COMP;
+         image: "ab_pika2.png" COMP;
       }
       styles {
          style { name: "aboutstyle";
-            base: "font=Sans font_size=8 color=#3f1 style=glow glow2_color=#3f13 glow_color=#3f11 wrap=word";
-            tag:  "b" "+ color=#8f8 glow2_color=#3f15 glow_color=#3f12";
+            //base: "font=Sans font_size=8 color=#3f1 style=glow glow2_color=#3f13 glow_color=#3f11 wrap=word";
+            //tag:  "b" "+ color=#8f8 glow2_color=#3f15 glow_color=#3f12";
+            base: "font=Sans font_size=8 color=#ffcc00 style=glow glow2_color=#9E8C00 glow_color=#9E8F00 wrap=word";
+            tag:  "b" "+ color=#524100 glow2_color=#iE3BD24 glow_color=#E3BD24";
          }
       }
       parts {
+         part { name: "pika";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1.relative: -1.0 -0.3;
+               rel2.relative: 0.6 1.2;
+               image.normal: "ab_pika.png";
+            }
+         }
+         part { name: "pika2";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1.relative: 0.4 -0.3;
+               rel2.relative: 2.0 1.2;
+               image.normal: "ab_pika2.png";
+            }
+         }
          part { name: "base";
             mouse_events: 0;
             description { state: "default" 0.0;

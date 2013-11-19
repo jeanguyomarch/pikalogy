@@ -29,3 +29,5 @@ License
 =======
 
 MIT license (see LICENSE.md)
+I do not own any pikachu image.
+

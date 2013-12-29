@@ -12,7 +12,7 @@ Terminology can be downloaded from here: http://web.enlightenment.org/p.php?p=ab
 This Edje theme has been inspired from the nyanology theme from Anisse Astier (https://github.com/anisse/nyanology)
 
 
-**Conforms to terminology 0.4.0-alpha2**
+**Conforms to terminology 0.4.99**
 
 Usage
 =====

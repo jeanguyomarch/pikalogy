@@ -3291,7 +3291,6 @@ collections {
                after: "show2";
             }
             program { name: "show2";
-               action: STATE_SET "default" 0.0;
                action: STATE_SET "out2" 0.0;
                transition: LINEAR 0.3;
                target: "l";

@@ -4,6 +4,7 @@
 #
 
 IGNORES="LICENSE.md Makefile README.md images pikalogy pikalogy.edc pikalogy.edj sounds unused.sh"
+BASE="`pwd`"
 
 dirs=". images sounds"
 for d in $dirs; do
@@ -23,7 +24,7 @@ for d in $dirs; do
          continue
       fi
 
-      grep -n "$l" ../pikalogy.edc 2>&1 > /dev/null
+      grep "$l" "$BASE/pikalogy.edc" 2>&1 > /dev/null
       if [ $? -ne 0 ]; then
          echo "UNUSED IN EDJE: $l"
       fi

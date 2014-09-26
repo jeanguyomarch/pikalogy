@@ -3806,6 +3806,7 @@ collections {
    ICON("new",      "icon_new.png");
    ICON("split-h",  "icon_split_h.png");
    ICON("split-v",  "icon_split_v.png");
+   ICON("mini-view",  "icon_miniview.png");
    ICON("close",    "icon_close.png");
    ICON("copy",     "icon_copy.png");
    ICON("paste",    "icon_paste.png");

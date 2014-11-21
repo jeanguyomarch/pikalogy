@@ -3872,6 +3872,7 @@ collections {
          part { name: "terminology.text"; type: TEXTBLOCK;
             clip_to: "baseclip";
             mouse_events: 1;
+            scale: 1;
             description { state: "default" 0.0;
                fixed: 1 1;
                align: 0.5 0.0;
@@ -3898,6 +3899,7 @@ collections {
             }
          }
          part { name: "shell";
+            scale: 1;
             description { state: "default" 0.0;
                max: 198 198;
                aspect: 1.0 1.0;

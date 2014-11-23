@@ -13,8 +13,6 @@ This Edje theme has been inspired from the nyanology theme from Anisse Astier (h
 
 
 
-**Conforms to terminology 0.6.1**
-
 Usage
 =====
 
@@ -22,6 +20,7 @@ Usage
 * In the directory of the pikalogy theme
   * `make` to compile the Edje file
   * `sudo make install` to install the files
+  * You can override the `PREFIX` variable to change the destination of the installed files
   * `sudo make uninstall` to remove installed files
 * In terminology, right-click, select ‘‘Settings’’ then ‘‘Theme’’ and chose ‘‘pikalogy’’
 

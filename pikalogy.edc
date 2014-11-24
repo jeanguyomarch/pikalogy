@@ -2602,6 +2602,7 @@ collections {
       parts {
 
          part { name: "pika";
+            scale:1;
             description { state: "default" 0.0;
                min:  0 25;
                max: 25 25;
@@ -2653,6 +2654,7 @@ collections {
             }
          }
          part { name: "thunder";
+            scale:1;
             description { state: "default" 0.0;
                rel1.relative: 4.0 0.0;
                max: 95 21.5;
@@ -2675,6 +2677,7 @@ collections {
             }
          }
          part { name: "bigthunder";
+            scale:1;
             description { state: "default" 0.0;
                rel1.relative: 4.0 -5.5;
                max: 32.5 109;

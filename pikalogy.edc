@@ -2608,7 +2608,7 @@ collections {
                max: 25 25;
                aspect: 2 2;
                aspect_preference: VERTICAL;
-               rel1.relative: 4.0 0;
+               rel1.relative: 5.0 0;
                image.normal: "pika_01.png";
                map.on: 1;
             }

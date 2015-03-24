@@ -29,13 +29,18 @@ Credits
 
 * Pikachu sprites: http://boomchica.deviantart.com/art/Pikachu-Sprite-Sheet-203643477
 * Lightning base picture: http://science.howstuffworks.com/nature/natural-disasters/lightning1.htm
+* Terminology is Copyright 2012-2015 Carsten Haitzler and others.
 
 License
 =======
 
-The MIT License (MIT)
+The MIT License (MIT) only applies to the modifications I made to the default theme
+of Terminology, not to the original file nor source code or icons belonging to Terminology.
 
-Copyright (c) 2013-2014 Jean Guyomarc'h
+
+
+
+Copyright (c) 2013-2015 Jean Guyomarc'h
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

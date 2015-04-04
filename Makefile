@@ -1,6 +1,8 @@
 PREFIX := /usr/local/share
 EDJE_CC := edje_cc
 
+.PHONY: all clean install uninstall
+
 all: pikalogy.edj
 
 pikalogy.edj: pikalogy.edc default_colors.in.edc

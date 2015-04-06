@@ -238,7 +238,7 @@ collections {
       }
       sounds {
          sample { name: "bell" LOSSY 64;
-            source: "pikachu.mp3";
+            source: "pikachu.wav";
          }
       }
       script {
@@ -1264,6 +1264,14 @@ collections {
                color: 255 255 255 0;
                min: 0 0;
             }
+         }
+         program {
+            signal: "bell,ring"; source: "terminology";
+#if (EFL_VERSION_MAJOR > 1) || (EFL_VERSION_MINOR >= 9)
+            action: PLAY_SAMPLE "bell" 1.0 ALERT;
+#else
+            action: PLAY_SAMPLE "bell" 1.0;
+#endif
          }
          program { name: "bell0";
             signal: "bell";

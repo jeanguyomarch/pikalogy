@@ -3270,24 +3270,26 @@ collections {
       parts {
 
          part { name: "pika";
-            scale:1;
             description { state: "default" 0.0;
-               min:  0 25;
-               max: 25 25;
-               aspect: 2 2;
-               aspect_preference: VERTICAL;
-               rel1.relative: 5.0 0;
+               min: 1 1;
+               rel1 {
+                  to: "key_clip";
+                  relative: 1.0 0.0;
+               }
+               rel2 {
+                  to: "key_clip";
+                  relative: 2.4 1.0;
+               }
                image.normal: "pika_01.png";
                map.on: 1;
             }
             description { state: "greyed";
-               inherit: "default";
+               inherit: "default" 0.0;
                color: 120 120 120 255;
             }
             description { state: "anim1" 0.0;
-               inherit: "default";
+               inherit: "default" 0.0;
                image {
-                  tween: "pika_01.png";
                   tween: "pika_02.png";
                   tween: "pika_03.png";
                   tween: "pika_04.png";
@@ -3298,9 +3300,8 @@ collections {
                inherit: "default" 0.0;
             }
             description { state: "run1" 0.0;
-               inherit: "default";
+               inherit: "default" 0.0;
                image {
-                  tween: "pika_09.png";
                   tween: "pika_10.png";
                   tween: "pika_11.png";
                   tween: "pika_12.png";
@@ -3309,9 +3310,8 @@ collections {
                map.rotation.z: 35.0;
             }
             description { state: "alert1" 0.0;
-               inherit: "default";
+               inherit: "default" 0.0;
                image {
-                  tween: "pika_13.png";
                   tween: "pika_14.png";
                   tween: "pika_15.png";
                   tween: "pika_16.png";
@@ -3333,7 +3333,7 @@ collections {
                }
             }
             description { state: "alert" 0.0;
-               inherit: "default";
+               inherit: "default" 0.0;
                image {
                   tween: "thunder_06.png";
                   tween: "thunder_07.png";
@@ -3367,8 +3367,7 @@ collections {
                }
             }
          }
-         part { name: "key";
-            mouse_events: 0;
+         part { name: "key_clip"; type: RECT; mouse_events: 0;
             description { state: "default" 0.0;
                rel1 {
                   to: "outline";
@@ -3378,6 +3377,14 @@ collections {
                   to: "outline";
                   offset: 4 4;
                }
+               visible: 0;
+            }
+         }
+         part { name: "key";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               rel1.to: "key_clip";
+               rel2.to: "key_clip";
                image {
                   normal: "cr_key.png";
                   border: 4 4 4 4;
@@ -3604,7 +3611,6 @@ collections {
                action: ACTION_STOP;
                target: "anim";
                target: "loop";
-               target: "bellrotate1";
                after: "stop_anim2";
             }
             program { name: "stop_anim2";
@@ -3617,7 +3623,6 @@ collections {
                source: "terminology";
                action: ACTION_STOP;
                target: "run";
-               after: "bellrotate1";
             }
             program { name: "suspendallatbellforthunder";
                signal: "bell";
@@ -3653,12 +3658,6 @@ collections {
             program { name: "resetbigthunder";
                action: STATE_SET "default" 0.0;
                target: "bigthunder";
-               after: "anim";
-            }
-            program { name: "bellrotate1";
-               action: STATE_SET "alert1" 0.0;
-               transition: LINEAR 0.52;
-               target: "pika";
                after: "anim";
             }
          }

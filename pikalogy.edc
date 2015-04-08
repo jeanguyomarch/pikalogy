@@ -3213,7 +3213,6 @@ collections {
    //////////////////////////////////////////////////////////////////////////////
    //// the cursor to show where text is typed
    group { name: "terminology/cursor";
-      #define FRAME_DURATION 0.07
       images {
          image: "cr_key.png" COMP;
          image: "cr_out.png" COMP;
@@ -3268,10 +3267,10 @@ collections {
          }
       }
       parts {
-
          part { name: "pika";
             description { state: "default" 0.0;
                min: 1 1;
+               align: 0.5 0.5;
                rel1 {
                   to: "key_clip";
                   relative: 1.0 0.0;
@@ -3281,7 +3280,6 @@ collections {
                   relative: 2.4 1.0;
                }
                image.normal: "pika_01.png";
-               map.on: 1;
             }
             description { state: "greyed";
                inherit: "default" 0.0;
@@ -3301,13 +3299,20 @@ collections {
             }
             description { state: "run1" 0.0;
                inherit: "default" 0.0;
+               rel1 {
+                  to: "key_clip";
+                  relative: 1.0 0.2;
+               }
+               rel2 {
+                  to: "key_clip";
+                  relative: 3.0 1.0;
+               }
+               align: 0.5 1.0;
                image {
-                  tween: "pika_10.png";
+                  normal: "pika_10.png";
                   tween: "pika_11.png";
                   tween: "pika_12.png";
-                  normal: "pika_09.png";
                }
-               map.rotation.z: 35.0;
             }
             description { state: "alert1" 0.0;
                inherit: "default" 0.0;
@@ -3583,52 +3588,55 @@ collections {
                transition: DECELERATE 0.3;
                target: "key";
             }
-            program { name: "run";
+            program { name: "pre_run";
                signal: "key,down";
                source: "terminology";
-               action: STATE_SET "run1" 0.0;
-               transition: LINEAR 0.1;
-               target: "pika";
-               after: "anim";
+               action: ACTION_STOP;
+               target: "pika_wave";
+               after: "pika_run1";
             }
-            program { name: "anim";
+            program { name: "pika_wave";
                signal: "focus,in";
                source: "terminology";
                action: STATE_SET "anim1" 0.0;
-               transition: LINEAR FRAME_DURATION*6;
+               transition: LINEAR 0.7;
                target: "pika";
-               after: "loop";
+               after: "pika_wave";
             }
-            program { name: "loop";
-               action: STATE_SET "pause" 0.0;
-               transition: LINEAR FRAME_DURATION*6;
+            program { name: "pika_run1";
+               action: STATE_SET "run1" 0.0;
+               transition: LINEAR 0.3;
                target: "pika";
-               after: "anim";
+               after: "pika_transit";
+            }
+            program { name: "pika_transit";
+               action: STATE_SET "anim1" 0.0;
+               target: "pika";
+               after: "pika_wave";
             }
             program { name: "stop_anim";
                signal: "focus,out";
                source: "terminology";
                action: ACTION_STOP;
-               target: "anim";
-               target: "loop";
-               after: "stop_anim2";
+               target: "pika_wave";
+               target: "pika_run1";
             }
             program { name: "stop_anim2";
                action: STATE_SET "greyed" 0.0;
-               transition: LINEAR FRAME_DURATION*6;
+               transition: LINEAR 0.1;
                target: "pika";
             }
             program { name: "suspendallatbell";
                signal: "bell";
                source: "terminology";
                action: ACTION_STOP;
-               target: "run";
+               target: "pika_run1";
             }
             program { name: "suspendallatbellforthunder";
                signal: "bell";
                source: "terminology";
                action: ACTION_STOP;
-               target: "run";
+               target: "pika_run1";
                after: "thethunder";
             }
             program { name: "thethunder";
@@ -3640,13 +3648,13 @@ collections {
             program { name: "resetthunder";
                action: STATE_SET "default" 0.0;
                target: "thunder";
-               after: "anim";
+               after: "pika_wave";
             }
             program { name: "suspendallatbellforbigthunder";
                signal: "bell";
                source: "terminology";
                action: ACTION_STOP;
-               target: "run";
+               target: "pika_run1";
                after: "thebigthunder";
             }
             program { name: "thebigthunder";
@@ -3658,7 +3666,7 @@ collections {
             program { name: "resetbigthunder";
                action: STATE_SET "default" 0.0;
                target: "bigthunder";
-               after: "anim";
+               after: "pika_wave";
             }
          }
       }

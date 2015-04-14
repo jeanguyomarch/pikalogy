@@ -23,6 +23,7 @@ Usage
   * You can override the `PREFIX` variable to change the destination of the installed files
   * `sudo make uninstall` to remove installed files
 * In terminology, right-click, select ‘‘Settings’’ then ‘‘Theme’’ and chose ‘‘pikalogy’’
+* In Settings/Behaviour don't forget to check the boxes ‘‘React to key presses’’, ‘‘Visual Bell’’ and ‘‘Cursor Blinking’’ for the best effects.
 
 Credits
 =======

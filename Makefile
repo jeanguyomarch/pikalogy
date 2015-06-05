@@ -1,4 +1,4 @@
-PREFIX := /usr/local/share
+PREFIX := /usr/local
 EDJE_CC := edje_cc
 
 .PHONY: all clean install uninstall
@@ -12,8 +12,8 @@ clean:
 	$(RM) pikalogy.edj
 
 install: pikalogy.edj
-	install -m 0644 pikalogy.edj $(PREFIX)/terminology/themes/
+	install -m 0644 pikalogy.edj $(PREFIX)/share/terminology/themes/
 
 uninstall:
-	$(RM) $(PREFIX)/terminology/themes/pikalogy.edj
+	$(RM) $(PREFIX)/share/terminology/themes/pikalogy.edj
 

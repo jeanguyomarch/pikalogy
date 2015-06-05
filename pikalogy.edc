@@ -3521,6 +3521,7 @@ collections {
                action: STATE_SET "default" 0.0;
                target: "glow";
                target: "outline";
+               after: "stop_anim2";
             }
             program {
                signal: "key,down"; source: "terminology";

@@ -1,6 +1,6 @@
-PREFIX := /usr/local
-EDJE_CC := edje_cc
-TERMINOLOGY := terminology
+PREFIX		:= /usr/local
+EDJE_CC		:= edje_cc
+TERMINOLOGY	:= terminology
 
 .PHONY: all clean install uninstall test
 

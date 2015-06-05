@@ -1,7 +1,8 @@
 PREFIX := /usr/local
 EDJE_CC := edje_cc
+TERMINOLOGY := terminology
 
-.PHONY: all clean install uninstall
+.PHONY: all clean install uninstall test
 
 all: pikalogy.edj
 
@@ -16,4 +17,7 @@ install: pikalogy.edj
 
 uninstall:
 	$(RM) $(PREFIX)/share/terminology/themes/pikalogy.edj
+
+test:
+	$(TERMINOLOGY) --theme=./pikalogy.edj
 

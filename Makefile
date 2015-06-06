@@ -29,6 +29,6 @@ install: pikalogy.edj
 uninstall:
 	$(RM) $(PREFIX)/share/terminology/themes/pikalogy.edj
 
-test:
+test: pikalogy.edj
 	$(TERMINOLOGY) --theme=./pikalogy.edj
 

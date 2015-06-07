@@ -17,11 +17,13 @@ Usage
 =====
 
 * Make sure terminology is installed (see download link above)
-* In the directory of the pikalogy theme
-  * `make` to compile the Edje file
-  * `sudo make install` to install the files
-  * You can override the `PREFIX` variable to change the destination of the installed files
-  * `sudo make uninstall` to remove installed files
+* In the directory of the pikalogy theme:
+  * `make DEFINITIONS="your definitions"` to compile the Edje file with options among:
+    * `-DPIKALOGY_WITH_THUNDERBOLD` to make the bell trigger thunderbold on bell activation`
+    * Full theme: `make DEFINITIONS="-DPIKALOGY_WITH_THUNDERBOLD"`.
+  * `make install` (as root if necessary) to install the files.
+  * You can override the `PREFIX` variable to change the destination of the installed files.
+  * `make uninstall` (as root if necessary) to remove installed files.
 * In terminology, right-click, select ‘‘Settings’’ then ‘‘Theme’’ and chose ‘‘pikalogy’’
 * In Settings/Behaviour don't forget to check the boxes ‘‘React to key presses’’, ‘‘Visual Bell’’ and ‘‘Cursor Blinking’’ for the best effects.
 

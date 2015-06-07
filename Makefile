@@ -11,13 +11,15 @@ EDJE_VERBOSE_0	:=
 EDJE_VERBOSE_1	:= -v
 EDJE_VERBOSE	:= $(EDJE_VERBOSE_$(V))
 
+DEFINITIONS	:=
+
 .PHONY: all clean install uninstall test
 
 all: pikalogy.edj
 
 pikalogy.edj: pikalogy.edc default_colors.in.edc
 	@echo "  EDJ       $@"
-	$(AT)$(EDJE_CC) $(EDJE_VERBOSE) -id images -sd sounds pikalogy.edc pikalogy.edj
+	$(AT)$(EDJE_CC) $(EDJE_VERBOSE) $(DEFINITIONS) -id images -sd sounds pikalogy.edc pikalogy.edj
 
 clean:
 	$(RM) pikalogy.edj

@@ -3714,14 +3714,15 @@ collections {
             PIKA_BELL_PROGRAM_GEN(6, "pika_bell_stop", TRANSIT_TYPE, TRANSIT_RATIO)
 #undef PIKA_BELL_PROGRAM_GEN
 
-         //   program {
-         //      signal: "bell";
-         //      source: "terminology";
-         //      action: STATE_SET "show" 0.1;
-         //      transition: TRANSIT_TYPE TRANSIT_RATIO;
-         //      target: "thunder";
-         //      after: "thunder_2";
-         //   }
+#ifdef PIKALOGY_WITH_THUNDERBOLD
+            program {
+               signal: "bell";
+               source: "terminology";
+               action: STATE_SET "show" 0.1;
+               transition: TRANSIT_TYPE TRANSIT_RATIO;
+               target: "thunder";
+               after: "thunder_2";
+            }
             program { name: "thunder_stop";
                action: STATE_SET "default" 0.0;
                transition: TRANSIT_TYPE TRANSIT_RATIO;
@@ -3739,7 +3740,7 @@ collections {
             THUNDER_PROGRAM_GEN(4, "thunder_5",    TRANSIT_TYPE, TRANSIT_RATIO)
             THUNDER_PROGRAM_GEN(5, "thunder_stop", TRANSIT_TYPE, TRANSIT_RATIO)
 #undef THUNDER_PROGRAM_GEN
-
+#endif /* PIKALOGY_WITH_THUNDERBOLD */
 
          }
       }

@@ -220,9 +220,6 @@ collections {
          image: "tab_shad_l1.png" COMP;
          image: "tab_shad_r0.png" COMP;
          image: "tab_shad_r1.png" COMP;
-         image: "lightening_1.png" COMP;
-         image: "lightening_2.png" COMP;
-         image: "lightening_3.png" COMP;
       }
       set { name: "bg_shadow";
          image { image: "bg_shadow.png"  COMP; size: 0 0 200 150; }
@@ -1189,82 +1186,6 @@ collections {
 
          ////////////////////////////////////////////////////////////////////
 
-
-         part { name: "THUNDER_1";
-            mouse_events: 0;
-            description { state: "default" 0.0;
-               fixed: 1 1;
-               visible: 0;
-               color: 255 255 255 0;
-               rel2.relative: 1.0 1.0;
-               align: 1 1;
-               min: 500 500;
-               max: 500 500;
-               fill.smooth: 0;
-               image.normal: "lightening_1.png";
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
-               color: 255 248 51 255;
-            }
-            description { state: "done" 0.0;
-               inherit: "default" 0.0;
-               visible: 0;
-               color: 255 255 255 0;
-               min: 0 0;
-            }
-         }
-         part { name: "THUNDER_2";
-            mouse_events: 0;
-            description { state: "default" 0.0;
-               fixed: 1 1;
-               visible: 0;
-               color: 255 255 255 0;
-               rel2.relative: 1.0 1.0;
-               align: 1 1;
-               min: 350 350;
-               max: 350 350;
-               fill.smooth: 0;
-               image.normal: "lightening_2.png";
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
-               color: 255 248 51 255;
-            }
-            description { state: "done" 0.0;
-               inherit: "default" 0.0;
-               visible: 0;
-               color: 255 255 255 0;
-               min: 0 0;
-            }
-         }
-         part { name: "THUNDER_3";
-            mouse_events: 0;
-            description { state: "default" 0.0;
-               fixed: 1 1;
-               visible: 0;
-               color: 255 255 255 0;
-               rel2.relative: 1.0 1.0;
-               align: 1 1;
-               min: 500 500;
-               max: 500 500;
-               fill.smooth: 0;
-               image.normal: "lightening_3.png";
-            }
-            description { state: "visible" 0.0;
-               inherit: "default" 0.0;
-               visible: 1;
-               color: 255 248 51 255;
-            }
-            description { state: "done" 0.0;
-               inherit: "default" 0.0;
-               visible: 0;
-               color: 255 255 255 0;
-               min: 0 0;
-            }
-         }
          program {
             signal: "bell,ring"; source: "terminology";
 #if (EFL_VERSION_MAJOR > 1) || (EFL_VERSION_MINOR >= 9)
@@ -1273,64 +1194,7 @@ collections {
             action: PLAY_SAMPLE "bell" 1.0;
 #endif
          }
-         program { name: "bell0";
-            signal: "bell";
-            source: "terminology";
-            action: STATE_SET "default" 0.0;
-            target: "THUNDER_1";
-            after: "bell";
-         }
-         program { name: "bell";
-            action: STATE_SET "visible" 0.0;
-            target: "THUNDER_1";
-            after: "bell2";
-         }
-         program { name: "bell2";
-            action: STATE_SET "visible" 0.0;
-            transition: ACCELERATE 0.05;
-            target: "THUNDER_1";
-            after: "bell1.1";
-         }
-         program { name: "bell1.1";
-            action: STATE_SET "default" 0.0;
-            target: "THUNDER_2";
-            after: "bell2.2";
-         }
-         program { name: "bell2.2";
-            action: STATE_SET "visible" 0.0;
-            transition: ACCELERATE 0.05;
-            target: "THUNDER_2";
-            after: "bell1.2";
-         }
-         program { name: "bell1.2";
-            action: STATE_SET "default" 0.0;
-            target: "THUNDER_3";
-            after: "bell2.3";
-         }
-         program { name: "bell2.3";
-            action: STATE_SET "visible" 0.0;
-            transition: ACCELERATE 0.05;
-            target: "THUNDER_3";
-            after: "bell3.1";
-         }
-         program { name: "bell3.1";
-            action: STATE_SET "done" 0.0;
-            transition: DECELERATE 0.1;
-            target: "THUNDER_1";
-            after: "bell3.2";
-         }
-         program { name: "bell3.2";
-            action: STATE_SET "done" 0.0;
-            transition: DECELERATE 0.1;
-            target: "THUNDER_2";
-            after: "bell3.3";
-         }
-         program { name: "bell3.3";
-            action: STATE_SET "done" 0.0;
-            transition: DECELERATE 0.1;
-            target: "THUNDER_3";
-         }
-
+    
          ////////////////////////////////////////////////////////////////////
          // popup media over the terminal (until dismissed)
          part { name: "popmedia_clip"; type: RECT;

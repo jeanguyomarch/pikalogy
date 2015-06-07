@@ -31,7 +31,6 @@ Credits
 =======
 
 * Pikachu sprites: http://boomchica.deviantart.com/art/Pikachu-Sprite-Sheet-203643477
-* Lightning base picture: http://science.howstuffworks.com/nature/natural-disasters/lightning1.htm
 * Terminology is Copyright 2012-2015 Carsten Haitzler and others.
 
 License

@@ -3230,24 +3230,22 @@ collections {
          image: "pika_10.png" COMP;
          image: "pika_11.png" COMP;
          image: "pika_12.png" COMP;
-         image: "pika_13.png" COMP;
-         image: "pika_14.png" COMP;
-         image: "pika_15.png" COMP;
-         image: "pika_16.png" COMP;
-         image: "pika_17.png" COMP;
-         image: "pika_18.png" COMP;
-         image: "thunder_01.png" COMP;
-         image: "thunder_02.png" COMP;
-         image: "thunder_03.png" COMP;
-         image: "thunder_04.png" COMP;
-         image: "thunder_05.png" COMP;
-         image: "thunder_06.png" COMP;
-         image: "thunder_07.png" COMP;
-         image: "thunder_08.png" COMP;
-         image: "thunder_09.png" COMP;
-         image: "thunder_10.png" COMP;
-         image: "clear.png" COMP;
-
+         image: "pika_bell_1.png" COMP;
+         image: "pika_bell_2.png" COMP;
+         image: "pika_bell_3.png" COMP;
+         image: "pika_bell_4.png" COMP;
+         image: "pika_bell_5.png" COMP;
+         image: "pika_bell_6.png" COMP;
+         image: "thunder_1.png" COMP;
+         image: "thunder_2.png" COMP;
+         image: "thunder_3.png" COMP;
+         image: "thunder_4.png" COMP;
+         image: "thunder_5.png" COMP;
+         image: "thunder_ground_1.png" COMP;
+         image: "thunder_ground_2.png" COMP;
+         image: "thunder_ground_3.png" COMP;
+         image: "thunder_ground_4.png" COMP;
+         image: "thunder_ground_5.png" COMP;
       }
       sounds {
          sample { name: "key-tap1" LOSSY 64;
@@ -3267,10 +3265,8 @@ collections {
          }
       }
       parts {
-         part { name: "pika";
+         part { name: "pika_clip"; type: RECT;
             description { state: "default" 0.0;
-               min: 1 1;
-               align: 0.5 0.5;
                rel1 {
                   to: "key_clip";
                   relative: 1.0 0.0;
@@ -3279,6 +3275,15 @@ collections {
                   to: "key_clip";
                   relative: 2.4 1.0;
                }
+               visible: 0;
+            }
+         }
+         part { name: "pika";
+            description { state: "default" 0.0;
+               min: 1 1;
+               align: 0.5 0.5;
+               rel1.to: "pika_clip";
+               rel2.to: "pika_clip";
                image.normal: "pika_01.png";
             }
             description { state: "greyed";
@@ -3314,63 +3319,78 @@ collections {
                   tween: "pika_12.png";
                }
             }
-            description { state: "alert1" 0.0;
-               inherit: "default" 0.0;
-               image {
-                  tween: "pika_14.png";
-                  tween: "pika_15.png";
-                  tween: "pika_16.png";
-                  tween: "pika_17.png";
-                  tween: "pika_18.png";
-                  normal: "pika_13.png";
-               }
+#define PIKA_BELL_DESCRIPTION_DEFINE(id, rely) \
+            description { state: "bell" 0.id; \
+               inherit: "default" 0.0; \
+               image.normal: "pika_bell_"#id".png"; \
+               rel1.relative: 0.0 (0.0 - rely); \
+               rel2.relative: 1.0 (1.0 - rely); \
             }
+            PIKA_BELL_DESCRIPTION_DEFINE(1, 0.5)
+            PIKA_BELL_DESCRIPTION_DEFINE(2, 0.5)
+            PIKA_BELL_DESCRIPTION_DEFINE(3, 0.5)
+            PIKA_BELL_DESCRIPTION_DEFINE(4, 0.5)
+            PIKA_BELL_DESCRIPTION_DEFINE(5, 0.5)
+            PIKA_BELL_DESCRIPTION_DEFINE(6, 0.2)
+#undef PIKA_BELL_DESCRIPTION_DEFINE
          }
+
+         /* Shockwave (thunder stoke on the ground) */
+         part { name: "thunder_ground"; mouse_events: 0;
+            description { state: "default" 0.0;
+               align: 0.5 1.0;
+               rel1 {
+                  to: "pika_clip";
+                  relative: -1.0 -0.4;
+               }
+               rel2 {
+                  to: "pika_clip";
+                  relative: 2.0 1.0;
+               }
+               image.normal: "thunder_ground_1.png";
+               visible: 0;
+            }
+#define THUNDER_GROUND_DESCRIPTION_DEFINE(id) \
+            description { state: "show" 0.id; \
+               inherit: "default" 0.0; \
+               visible: 1; \
+               image.normal: "thunder_ground_"#id".png"; \
+            }
+            THUNDER_GROUND_DESCRIPTION_DEFINE(1)
+            THUNDER_GROUND_DESCRIPTION_DEFINE(2)
+            THUNDER_GROUND_DESCRIPTION_DEFINE(3)
+            THUNDER_GROUND_DESCRIPTION_DEFINE(4)
+            THUNDER_GROUND_DESCRIPTION_DEFINE(5)
+#undef THUNDER_GROUND_DESCRIPTION_DEFINE
+         }
+
          part { name: "thunder";
             scale:1;
             description { state: "default" 0.0;
-               rel1.relative: 4.0 0.0;
-               max: 95 21.5;
-               min: 95 21.5;
-               fixed: 1 1;
-               image {
-                  normal: "clear.png";
+               align: 0.5 1.0;
+               rel1 {
+                  to: "thunder_ground";
+                  relative: 0.0 -4.0;
                }
-            }
-            description { state: "alert" 0.0;
-               inherit: "default" 0.0;
-               image {
-                  tween: "thunder_06.png";
-                  tween: "thunder_07.png";
-                  tween: "thunder_08.png";
-                  tween: "thunder_09.png";
-                  tween: "thunder_10.png";
-                  normal: "thunder_06.png";
+               rel2 {
+                  to: "thunder_ground";
+                  relative: 1.0 1.0;
                }
+               image.normal: "thunder_1.png";
+               visible: 0;
             }
-         }
-         part { name: "bigthunder";
-            scale:1;
-            description { state: "default" 0.0;
-               rel1.relative: 4.0 -5.5;
-               max: 32.5 109;
-               min: 32.5 109;
-               fixed: 1 1;
-               image {
-                  normal: "clear.png";
-               }
+#define THUNDER_DESCRIPTION_DEFINE(id) \
+            description { state: "show" 0.id; \
+               inherit: "default" 0.0; \
+               visible: 1; \
+               image.normal: "thunder_"#id".png"; \
             }
-            description { state: "alert" 0.0;
-               inherit: "default";
-               image {
-                  tween: "thunder_01.png";
-                  tween: "thunder_02.png";
-                  tween: "thunder_03.png";
-                  tween: "thunder_04.png";
-                  tween: "thunder_05.png";
-                  normal: "thunder_01.png";
-               }
-            }
+            THUNDER_DESCRIPTION_DEFINE(1)
+            THUNDER_DESCRIPTION_DEFINE(2)
+            THUNDER_DESCRIPTION_DEFINE(3)
+            THUNDER_DESCRIPTION_DEFINE(4)
+            THUNDER_DESCRIPTION_DEFINE(5)
+#undef THUNDER_DESCRIPTION_DEFINE
          }
          part { name: "key_clip"; type: RECT; mouse_events: 0;
             description { state: "default" 0.0;
@@ -3627,48 +3647,100 @@ collections {
                transition: LINEAR 0.1;
                target: "pika";
             }
-            program { name: "suspendallatbell";
-               signal: "bell";
+
+/*============================================================================*
+ *                               Thunder Ground                               *
+ *============================================================================*/
+
+#define TRANSIT_TYPE  LINEAR
+#define TRANSIT_RATIO 0.1
+
+            program { name: "thunder_ground_start";
                source: "terminology";
-               action: ACTION_STOP;
-               target: "pika_run1";
-            }
-            program { name: "suspendallatbellforthunder";
                signal: "bell";
-               source: "terminology";
-               action: ACTION_STOP;
-               target: "pika_run1";
-               after: "thethunder";
+               action: STATE_SET "show" 0.1;
+               transition: TRANSIT_TYPE TRANSIT_RATIO;
+               target: "thunder_ground";
+               after: "thunder_ground_2";
             }
-            program { name: "thethunder";
-               action: STATE_SET "alert" 0.0;
-               transition: LINEAR 0.52;
-               target: "thunder";
-               after: "resetthunder";
-            }
-            program { name: "resetthunder";
+            program { name: "thunder_ground_stop";
                action: STATE_SET "default" 0.0;
-               target: "thunder";
-               after: "pika_wave";
+               transition: TRANSIT_TYPE TRANSIT_RATIO;
+               target: "thunder_ground";
             }
-            program { name: "suspendallatbellforbigthunder";
+#define THUNDER_GROUND_PROGRAM_GEN(id, next, transit, ratio) \
+            program { name: "thunder_ground_"#id; \
+               action: STATE_SET "show" 0.id; \
+               transition: transit ratio; \
+               target: "thunder_ground"; \
+               after: next; \
+            }
+            THUNDER_GROUND_PROGRAM_GEN(2, "thunder_ground_3",    TRANSIT_TYPE, TRANSIT_RATIO)
+            THUNDER_GROUND_PROGRAM_GEN(3, "thunder_ground_4",    TRANSIT_TYPE, TRANSIT_RATIO)
+            THUNDER_GROUND_PROGRAM_GEN(4, "thunder_ground_5",    TRANSIT_TYPE, TRANSIT_RATIO)
+            THUNDER_GROUND_PROGRAM_GEN(5, "thunder_ground_stop", TRANSIT_TYPE, TRANSIT_RATIO)
+#undef THUNDER_GROUND_PROGRAM_GEN
+
+            /* Stops all animations when bell rings */
+            program {
                signal: "bell";
                source: "terminology";
                action: ACTION_STOP;
                target: "pika_run1";
-               after: "thebigthunder";
+               after: "pika_bell_start";
             }
-            program { name: "thebigthunder";
+            program { name: "pika_bell_start";
                action: STATE_SET "alert" 0.0;
-               transition: LINEAR 0.52;
-               target: "bigthunder";
-               after: "resetbigthunder";
+               target: "pika";
+               transition: TRANSIT_TYPE TRANSIT_RATIO;
+               after: "pika_bell_2";
             }
-            program { name: "resetbigthunder";
+            program { name: "pika_bell_stop";
                action: STATE_SET "default" 0.0;
-               target: "bigthunder";
-               after: "pika_wave";
+               target: "pika";
+               transition: TRANSIT_TYPE TRANSIT_RATIO;
             }
+#define PIKA_BELL_PROGRAM_GEN(id, next, transit, ratio) \
+            program { name: "pika_bell_"#id; \
+               action: STATE_SET "bell" 0.id; \
+               transition: transit ratio; \
+               target: "pika"; \
+               after: next; \
+            }
+            PIKA_BELL_PROGRAM_GEN(2, "pika_bell_3",    TRANSIT_TYPE, TRANSIT_RATIO)
+            PIKA_BELL_PROGRAM_GEN(3, "pika_bell_4",    TRANSIT_TYPE, TRANSIT_RATIO)
+            PIKA_BELL_PROGRAM_GEN(4, "pika_bell_5",    TRANSIT_TYPE, TRANSIT_RATIO)
+            PIKA_BELL_PROGRAM_GEN(5, "pika_bell_6",    TRANSIT_TYPE, TRANSIT_RATIO)
+            PIKA_BELL_PROGRAM_GEN(6, "pika_bell_stop", TRANSIT_TYPE, TRANSIT_RATIO)
+#undef PIKA_BELL_PROGRAM_GEN
+
+         //   program {
+         //      signal: "bell";
+         //      source: "terminology";
+         //      action: STATE_SET "show" 0.1;
+         //      transition: TRANSIT_TYPE TRANSIT_RATIO;
+         //      target: "thunder";
+         //      after: "thunder_2";
+         //   }
+            program { name: "thunder_stop";
+               action: STATE_SET "default" 0.0;
+               transition: TRANSIT_TYPE TRANSIT_RATIO;
+               target: "thunder";
+            }
+#define THUNDER_PROGRAM_GEN(id, next, transit, ratio) \
+            program { name: "thunder_"#id; \
+               action: STATE_SET "show" 0.id; \
+               transition: transit ratio; \
+               target: "thunder"; \
+               after: next; \
+            }
+            THUNDER_PROGRAM_GEN(2, "thunder_3",    TRANSIT_TYPE, TRANSIT_RATIO)
+            THUNDER_PROGRAM_GEN(3, "thunder_4",    TRANSIT_TYPE, TRANSIT_RATIO)
+            THUNDER_PROGRAM_GEN(4, "thunder_5",    TRANSIT_TYPE, TRANSIT_RATIO)
+            THUNDER_PROGRAM_GEN(5, "thunder_stop", TRANSIT_TYPE, TRANSIT_RATIO)
+#undef THUNDER_PROGRAM_GEN
+
+
          }
       }
    }

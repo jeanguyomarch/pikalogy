@@ -3563,6 +3563,7 @@ collections {
                action: STATE_SET "default" 0.0;
                target: "pika";
                transition: TRANSIT_TYPE TRANSIT_RATIO;
+               after: "pika_wave";
             }
 #define PIKA_BELL_PROGRAM_GEN(id, next, transit, ratio) \
             program { name: "pika_bell_"#id; \

@@ -5,9 +5,9 @@ Pikachu theme for Terminology
 -----------------------------
 
 
-Terminology is the genius terminal developed by the Enlightenment Foundation (http://web.enlightenment.org/p.php?p=index&l=en)
+Terminology is the genius terminal developed by the Enlightenment Foundation (https://www.enlightenment.org)
 
-Terminology can be downloaded from here: http://web.enlightenment.org/p.php?p=about/terminology&l=en
+Terminology can be downloaded from here: https://www.enlightenment.org/about-terminology
 
 This Edje theme has been inspired from the nyanology theme from Anisse Astier (https://github.com/anisse/nyanology)
 

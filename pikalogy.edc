@@ -233,11 +233,13 @@ collections {
          image { image: "bg_shine2.png" COMP; size: 1024 480 2048 960; }
          image { image: "bg_shine.png"  COMP; size: 2048 960 99999 99999; }
       }
+#ifdef WITH_SOUND
       sounds {
          sample { name: "bell" LOSSY 64;
             source: "pikachu.wav";
          }
       }
+#endif
       script {
          public message(Msg_Type:type, id, ...) {
             new r, g, b, a, v;
@@ -1186,6 +1188,7 @@ collections {
 
          ////////////////////////////////////////////////////////////////////
 
+#ifdef WITH_SOUND
          program {
             signal: "bell,ring"; source: "terminology";
 #if (EFL_VERSION_MAJOR > 1) || (EFL_VERSION_MINOR >= 9)
@@ -1194,6 +1197,7 @@ collections {
             action: PLAY_SAMPLE "bell" 1.0;
 #endif
          }
+#endif
     
          ////////////////////////////////////////////////////////////////////
          // popup media over the terminal (until dismissed)
@@ -3111,6 +3115,7 @@ collections {
          image: "thunder_ground_4.png" COMP;
          image: "thunder_ground_5.png" COMP;
       }
+#ifdef WITH_SOUND
       sounds {
          sample { name: "key-tap1" LOSSY 64;
             source: "kbd-tap.wav";
@@ -3128,6 +3133,7 @@ collections {
             source: "kbd-tap5.wav";
          }
       }
+#endif
       parts {
          part { name: "pika_clip"; type: RECT;
             description { state: "default" 0.0;
@@ -3407,6 +3413,7 @@ collections {
                target: "outline";
                after: "stop_anim2";
             }
+#ifdef WITH_SOUND
             program {
                signal: "key,down"; source: "terminology";
                script {
@@ -3456,6 +3463,7 @@ collections {
                action: PLAY_SAMPLE "key-tap5" 1.0;
 #endif
             }
+#endif
             program { name: "key";
                signal: "key,down";
                source: "terminology";

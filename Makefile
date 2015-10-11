@@ -11,7 +11,8 @@ EDJE_VERBOSE_0	:=
 EDJE_VERBOSE_1	:= -v
 EDJE_VERBOSE	:= $(EDJE_VERBOSE_$(V))
 
-DEFINITIONS	:=
+DEFINITIONS	?=
+#DEFINITIONS	:= -DWITH_SOUND
 
 .PHONY: all clean install uninstall test
 

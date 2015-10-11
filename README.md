@@ -19,8 +19,7 @@ Usage
 * Make sure terminology is installed (see download link above)
 * In the directory of the pikalogy theme:
   * `make DEFINITIONS="your definitions"` to compile the Edje file with options among:
-    * `-DPIKALOGY_WITH_THUNDERBOLD` to make the bell trigger thunderbold on bell activation`
-    * Full theme: `make DEFINITIONS="-DPIKALOGY_WITH_THUNDERBOLD"`.
+    * `-DWITH_SOUND` to unable sound effects (DISABLED BY DEFAULT)
   * `make install` (as root if necessary) to install the files.
   * You can override the `PREFIX` variable to change the destination of the installed files.
   * `make uninstall` (as root if necessary) to remove installed files.

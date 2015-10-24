@@ -3114,6 +3114,7 @@ collections {
          image: "thunder_ground_3.png" COMP;
          image: "thunder_ground_4.png" COMP;
          image: "thunder_ground_5.png" COMP;
+         image: "pika_sleep.png" COMP;
       }
 #ifdef WITH_SOUND
       sounds {
@@ -3158,7 +3159,11 @@ collections {
             }
             description { state: "greyed";
                inherit: "default" 0.0;
-               color: 120 120 120 255;
+               rel2 {
+                  to: "pika_clip";
+                  relative: 1.6 1.0;
+               }
+               image.normal: "pika_sleep.png";
             }
             description { state: "anim1" 0.0;
                inherit: "default" 0.0;
@@ -3488,9 +3493,15 @@ collections {
                target: "pika_wave";
                after: "pika_run1";
             }
-            program { name: "pika_wave";
+            program { name: "pika_wakeup";
                signal: "focus,in";
                source: "terminology";
+               action: STATE_SET "default";
+               transition: LINEAR 0.1;
+               target: "pika";
+               after: "pika_wave";
+            }
+            program { name: "pika_wave";
                action: STATE_SET "anim1" 0.0;
                transition: LINEAR 0.7;
                target: "pika";
@@ -3516,7 +3527,7 @@ collections {
             }
             program { name: "stop_anim2";
                action: STATE_SET "greyed" 0.0;
-               transition: LINEAR 0.1;
+               transition: DECELERATE 0.4;
                target: "pika";
             }
 

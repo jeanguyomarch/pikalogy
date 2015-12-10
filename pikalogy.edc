@@ -3547,7 +3547,7 @@ collections {
             program { name: "pika_wakeup";
                signal: "focus,in";
                source: "terminology";
-               action: STATE_SET "default";
+               action: STATE_SET "default" 0.0;
                transition: LINEAR 0.1;
                target: "pika";
                after: "pika_wave";

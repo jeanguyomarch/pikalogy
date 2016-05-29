@@ -64,6 +64,7 @@ collections {
          }
          part { name: "miniview.close_shadow"; type: IMAGE;
             description { state: "default" 0.0;
+               fixed: 1 1;
                image {
                   normal: "fn_shadow.png";
                };
@@ -1189,6 +1190,7 @@ collections {
          }
          part { name: "tabclose"; type: IMAGE;
             description { state: "default" 0.0;
+               fixed: 1 1;
                image {
                   normal: "tab_close.png";
                };
@@ -2159,6 +2161,7 @@ collections {
             mouse_events: 0;
             clip_to: "0.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to_x: "terminology.top_left";
                   relative: 1.0 0.0;
@@ -2183,6 +2186,7 @@ collections {
             mouse_events: 0;
             clip_to: "0.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to_x: "terminology.bottom_right";
                   relative: 0.0 0.0;
@@ -2263,6 +2267,7 @@ collections {
             mouse_events: 0;
             clip_to: "1.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to: "terminology.top_left";
                   relative: 1.0 0.0;
@@ -2287,6 +2292,7 @@ collections {
             mouse_events: 0;
             clip_to: "1.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to_y: "terminology.top_left";
                   relative: 1.0 0.0;
@@ -2357,6 +2363,7 @@ collections {
             mouse_events: 0;
             clip_to: "1.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to_y: "terminology.bottom_right";
                   offset: -1 -1;
@@ -2380,6 +2387,7 @@ collections {
             mouse_events: 0;
             clip_to: "1.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to: "terminology.bottom_right";
                   relative: 0.0 0.0;
@@ -2460,6 +2468,7 @@ collections {
             mouse_events: 0;
             clip_to: "2.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to: "top_clip";
                   relative: 0.0 0.0;
@@ -2483,6 +2492,7 @@ collections {
             mouse_events: 0;
             clip_to: "2.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to: "bottom_clip";
                   relative: 1.0 0.0;
@@ -2654,6 +2664,7 @@ collections {
             mouse_events: 0;
             clip_to: "3.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to: "bottom_clip";
                   relative: 1.0 0.0;
@@ -2802,6 +2813,7 @@ collections {
             mouse_events: 0;
             clip_to: "4.clip";
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1 {
                   to: "top_clip";
                   relative: 0.0 0.0;
@@ -2997,6 +3009,7 @@ collections {
          part { name: "terminology.top_left"; type: SWALLOW;
             mouse_events: 0;
             description { state: "default" 0.0;
+               fixed: 1 1;
                align: 0.0 0.0;
                rel2.relative: 0.0 0.0;
                visible: 0;
@@ -3005,6 +3018,7 @@ collections {
          part { name: "terminology.bottom_right"; type: SWALLOW;
             mouse_events: 0;
             description { state: "default" 0.0;
+               fixed: 1 1;
                align: 1.0 1.0;
                rel1.relative: 1.0 1.0;
                visible: 0;
@@ -3015,6 +3029,7 @@ collections {
          part { name: "cursor.top_left"; type: RECT;
             mouse_events: 0;
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1.to: "terminology.top_left";
                rel1.relative: 1.0 0.0;
                rel2.to: "terminology.top_left";
@@ -3072,6 +3087,7 @@ collections {
          part { name: "cursor.bottom_right"; type: RECT;
             mouse_events: 0;
             description { state: "default" 0.0;
+               fixed: 1 0;
                rel1.to: "terminology.bottom_right";
                rel1.relative: 0.0 0.0;
                rel1.offset: -1 0;

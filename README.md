@@ -11,8 +11,6 @@ Terminology can be downloaded from here: https://www.enlightenment.org/about-ter
 
 This Edje theme has been inspired from the nyanology theme from Anisse Astier (https://github.com/anisse/nyanology)
 
-
-
 Usage
 =====
 
@@ -60,3 +58,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+Screenshots
+===========
+
+
+![](docs/1.jpg)
+![](docs/2.jpg)
+![](docs/3.jpg)
+![](docs/4.jpg)
+![](docs/5.jpg)

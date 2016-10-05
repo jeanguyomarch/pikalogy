@@ -18,7 +18,8 @@ DEFINITIONS	?=
 
 all: pikalogy.edj
 
-pikalogy.edj: pikalogy.edc default_colors.in.edc
+pikalogy.edj: pikalogy.edc default_colors.in.edc \
+   Makefile $(wildcard images/*) $(wildcard sounds/*)
 	@echo "  EDJ       $@"
 	$(AT)$(EDJE_CC) $(EDJE_VERBOSE) $(DEFINITIONS) -id images -sd sounds pikalogy.edc pikalogy.edj
 
@@ -34,4 +35,3 @@ uninstall:
 
 test: pikalogy.edj
 	$(TERMINOLOGY) --theme=./pikalogy.edj
-

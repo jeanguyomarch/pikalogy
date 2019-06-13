@@ -3691,7 +3691,7 @@ collections {
                after: "pika_bell_start";
             }
             program { name: "pika_bell_start";
-               action: STATE_SET "bell" 0.0;
+               action: STATE_SET "bell" 0.1;
                target: "pika";
                transition: TRANSIT_TYPE TRANSIT_RATIO;
                after: "pika_bell_2";

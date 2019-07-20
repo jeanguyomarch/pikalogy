@@ -10,7 +10,7 @@ This Pikachu theme for Terminlogy has been inspired from the [nyanology theme
 from Anisse Astier][3].
 
 Note that this is completely unaffiliated with [Nintendo][5] or [The Pokemon
-Compagny][4]... this is just a fan theme made for fun I'm not searching for
+Company][4]... this is just a fan theme made for fun I'm not searching for
 trouble (to make it double).
 
 ## Usage
